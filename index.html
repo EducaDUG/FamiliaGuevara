@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia Familia Guevara Jauregui</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts & Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'vintage-cream': '#fdfbf7',
+                        'sepia-ink': '#2c241b',
+                        'old-gold': '#c5a059',
+                        'forest-green': '#2d4a3e',
+                        'burgundy': '#7a2021'
+                    },
+                    fontFamily: {
+                        'serif': ['"Playfair Display"', 'serif'],
+                        'sans': ['"Lato"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #fdfbf7; color: #2c241b; }
+        
+        /* Estilos 3D Pop */
+        .card-pop {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 2px solid #2d4a3e;
+            box-shadow: 8px 8px 0px #c5a059;
+            background: white;
+        }
+        .card-pop:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0px #2d4a3e;
+        }
+
+        .btn-action {
+            background-color: #2d4a3e;
+            color: white;
+            border: 2px solid #2d4a3e;
+            box-shadow: 4px 4px 0px #c5a059;
+            transition: all 0.2s;
+        }
+        .btn-action:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px #c5a059;
+        }
+
+        /* Estilo para el chat */
+        .chat-bubble {
+            position: relative;
+            background: #fff;
+            border-radius: .4em;
+        }
+        .chat-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-top-color: #fff;
+            border-bottom: 0;
+            margin-left: -10px;
+            margin-bottom: -10px;
+        }
+        
+        /* Ocultar scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-old-gold selection:text-white">
+
+    <!-- Configuración API -->
+    <script>
+        // CAMBIAR POR TU URL DE VERCEL AL DESPLEGAR
+        const API_BASE = "http://localhost:3000"; 
+    </script>
+
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50 bg-forest-green/95 backdrop-blur text-vintage-cream shadow-lg border-b-4 border-old-gold">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center cursor-pointer" onclick="showSection('home')">
+                <i class="fas fa-tree text-old-gold text-2xl mr-2"></i>
+                <span class="font-serif text-xl font-bold tracking-wider">FAMILIA GUEVARA JAUREGUI</span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-bold uppercase tracking-widest">
+                <button onclick="showSection('guevara')" class="hover:text-old-gold transition">Los Guevara</button>
+                <button onclick="showSection('jauregui')" class="hover:text-old-gold transition">Los Jauregui</button>
+                <button onclick="showSection('love')" class="hover:text-old-gold transition">Historia de Amor</button>
+                <button onclick="showSection('life')" class="hover:text-old-gold transition">Vida y Legado</button>
+            </div>
+            <button onclick="showSection('chat')" class="md:hidden text-vintage-cream text-xl"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <!-- Contenedor Principal -->
+    <main class="pt-24 pb-12 px-4 min-h-screen container mx-auto">
+
+        <!-- HOME SECTION -->
+        <section id="home" class="animate-fade-in">
+            <div class="text-center py-10" data-aos="zoom-in">
+                <h1 class="font-serif text-5xl md:text-7xl font-bold text-forest-green mb-4">Nuestras Raíces</h1>
+                <div class="w-24 h-1 bg-old-gold mx-auto mb-6"></div>
+                <p class="text-xl md:text-2xl text-sepia-ink italic max-w-3xl mx-auto leading-relaxed">
+                    "Me parecía interesante transmitir a las futuras generaciones muchas de las historias de la familia Guevara Jauregui basadas en recuerdos..."
+                </p>
+                
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <!-- Card 1 -->
+                    <div class="card-pop p-8 rounded-xl cursor-pointer group" onclick="showSection('guevara')">
+                        <div class="w-16 h-16 bg-forest-green rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-old-gold transition">
+                            <i class="fas fa-user-md text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold mb-2">Ángel Guevara</h3>
+                        <p class="text-sm text-gray-600">El médico de Zalduendo. Linaje de confiteros y propietarios.</p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="card-pop p-8 rounded-xl cursor-pointer group" onclick="showSection('jauregui')">
+                        <div class="w-16 h-16 bg-forest-green rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-old-gold transition">
+                            <i class="fas fa-bolt text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold mb-2">Josefina Jauregui</h3>
+                        <p class="text-sm text-gray-600">Hija de "El Regalao". Minas de asfalto y electricidad en Maestu.</p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="card-pop p-8 rounded-xl cursor-pointer group" onclick="showSection('love')">
+                        <div class="w-16 h-16 bg-forest-green rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-old-gold transition">
+                            <i class="fas fa-heart text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold mb-2">Unión 1916</h3>
+                        <p class="text-sm text-gray-600">Una boda en Lezo, una pandemia y una casa en Ilárraza.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN GUEVARA -->
+        <section id="guevara" class="hidden space-y-12">
+            <div class="text-center mb-12" data-aos="fade-down">
+                <span class="text-old-gold font-bold tracking-widest uppercase">1826 - 1918</span>
+                <h2 class="font-serif text-5xl text-forest-green font-bold">El Linaje Guevara</h2>
+            </div>
+
+            <div class="max-w-4xl mx-auto" data-aos="fade-up">
+                <div class="card-pop p-8 md:p-12 rounded-lg bg-white relative">
+                    <div class="absolute -top-4 -left-4 bg-old-gold text-white px-4 py-1 font-bold shadow-md transform -rotate-2">LOS ORÍGENES</div>
+                    <ul class="space-y-6 mt-4">
+                        <li class="flex items-start">
+                            <div class="bg-forest-green/10 p-3 rounded-full mr-4 shrink-0">
+                                <i class="fas fa-certificate text-forest-green text-xl"></i>
+                            </div>
+                            <div>
+                                <strong class="text-xl text-forest-green font-serif">Santiago Guevara (1826)</strong>
+                                <p class="text-gray-600 mt-1">El inicio documentado del linaje. Casado en Junguitu con Gregoria Álvarez de Arcaya. De esta unión nace la rama que consolidaría el patrimonio familiar.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="bg-forest-green/10 p-3 rounded-full mr-4 shrink-0">
+                                <i class="fas fa-store text-forest-green text-xl"></i>
+                            </div>
+                            <div>
+                                <strong class="text-xl text-forest-green font-serif">Telesforo Guevara (1838-1918)</strong>
+                                <p class="text-gray-600 mt-1">Confitero y propietario en Vitoria. Adquirió casas en la C/Barreras (10.750 Ptas) y C/Francia. Un hombre emprendedor que desgraciadamente falleció en la epidemia de gripe de 1918.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="bg-forest-green/10 p-3 rounded-full mr-4 shrink-0">
+                                <i class="fas fa-user-graduate text-forest-green text-xl"></i>
+                            </div>
+                            <div>
+                                <strong class="text-xl text-forest-green font-serif">Ángel Guevara Ajuria (1887-1965)</strong>
+                                <p class="text-gray-600 mt-1">Médico titular de Zalduendo y Junguitu. Licenciado en Valladolid (1913). Se le recuerda como un hombre tímido, mimado por sus padres y con una gran afición: la caza.</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <button onclick="askAI('Cuéntame más sobre la vida de un médico rural en Álava a principios del siglo XX')" class="mt-8 w-full btn-action py-3 rounded font-bold uppercase text-sm tracking-wide">
+                        <i class="fas fa-magic mr-2"></i> IA: Vida de un médico en 1900
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN JAUREGUI -->
+        <section id="jauregui" class="hidden space-y-12">
+            <div class="text-center mb-12" data-aos="fade-down">
+                <span class="text-old-gold font-bold tracking-widest uppercase">Maestu y Minería</span>
+                <h2 class="font-serif text-5xl text-forest-green font-bold">El Linaje Jauregui</h2>
+            </div>
+
+            <div class="max-w-4xl mx-auto" data-aos="fade-up">
+                <div class="card-pop p-8 md:p-12 rounded-lg bg-white relative">
+                     <div class="absolute -top-4 -right-4 bg-burgundy text-white px-4 py-1 font-bold shadow-md transform rotate-2">MAESTU</div>
+                    
+                    <div class="mb-8 border-b border-gray-200 pb-8">
+                        <h3 class="font-serif text-3xl font-bold mb-4 text-burgundy flex items-center">
+                            <i class="fas fa-landmark mr-3 text-2xl"></i> Pedro Valentín "El Regalao"
+                        </h3>
+                        <p class="mb-4 text-lg text-justify leading-relaxed text-gray-700">
+                            Una figura central en Maestu (1851-1930). Fue secretario del Ayuntamiento y diputado provincial, pero su gran rol fue como administrador de confianza de Juan Arana. Gestionaba la <strong>Sociedad de Asfaltos de Leorza</strong> y fue pionero al traer la electricidad con la primera Central Eléctrica de Maestu.
+                        </p>
+                        <div class="bg-gray-100 p-4 rounded border-l-4 border-old-gold">
+                            <p class="italic text-sm text-gray-600">"El apodo quizás venía de que llevaba una vida regalada viviendo de las rentas..."</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-serif text-2xl font-bold mb-4 text-burgundy flex items-center">
+                             <i class="fas fa-female mr-3 text-2xl"></i> Josefina Jauregui (1893)
+                        </h3>
+                        <p class="mb-6 text-lg text-justify leading-relaxed text-gray-700">
+                            Su infancia estuvo marcada por la pérdida de su madre, Guadalupe, cuando solo tenía 7 años. Pasaba largas temporadas con sus abuelos maternos en la <strong>Plazuela de Los Guardias</strong> en Vitoria, un lugar clave donde conocería a su futuro esposo, Ángel.
+                        </p>
+                    </div>
+
+                     <button onclick="askAI('¿Qué importancia tuvieron las minas de asfalto de la Montaña Alavesa en el desarrollo industrial?')" class="w-full btn-action py-3 rounded font-bold uppercase text-sm tracking-wide">
+                        <i class="fas fa-hammer mr-2"></i> IA: Minas de Asfalto
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN HISTORIA DE AMOR -->
+        <section id="love" class="hidden space-y-12">
+            <div class="bg-white p-8 md:p-12 rounded-xl card-pop max-w-4xl mx-auto relative overflow-hidden">
+                <i class="fas fa-heart text-red-50 absolute top-4 right-4 text-9xl -z-0 opacity-50"></i>
+                
+                <div class="relative z-10" data-aos="zoom-in">
+                    <h2 class="font-serif text-4xl md:text-5xl text-center text-forest-green mb-8">La Unión (1916)</h2>
+                    
+                    <!-- Timeline Vertical -->
+                    <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent">
+                        
+                        <!-- Evento 1 -->
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-forest-green text-slate-500 group-[.is-active]:text-emerald-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-paper p-4 rounded border border-slate-200 shadow">
+                                <div class="flex items-center justify-between space-x-2 mb-1">
+                                    <div class="font-bold text-slate-900">Marzo 1916: La Petición</div>
+                                </div>
+                                <div class="text-slate-500 text-sm">Ángel escribe formalmente a su suegro Pedro. La prensa ("Ecos Regionales") anuncia la petición.</div>
+                            </div>
+                        </div>
+
+                        <!-- Evento 2 -->
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-old-gold text-slate-500 group-[.is-active]:text-emerald-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                                <i class="fas fa-church"></i>
+                            </div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-paper p-4 rounded border border-slate-200 shadow">
+                                <div class="flex items-center justify-between space-x-2 mb-1">
+                                    <div class="font-bold text-slate-900">17 Nov 1916: La Boda</div>
+                                </div>
+                                <div class="text-slate-500 text-sm">
+                                    En la <strong>Basílica del Santo Cristo de Lezo</strong>.
+                                    <br><span class="text-xs italic text-red-600">Curiosidad: Estíbaliz estaba en obras y el hermano Pepe hacía la mili cerca.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Evento 3 -->
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-burgundy text-slate-500 group-[.is-active]:text-emerald-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                                <i class="fas fa-train"></i>
+                            </div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-paper p-4 rounded border border-slate-200 shadow">
+                                <div class="flex items-center justify-between space-x-2 mb-1">
+                                    <div class="font-bold text-slate-900">Viaje de Novios</div>
+                                </div>
+                                <div class="text-slate-500 text-sm">Billete kilométrico de 6.000 km. Al volver se instalan en Zalduendo.</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <button onclick="askAI('¿Cómo era el ajuar de una novia burguesa en 1916 según las facturas de Obdulia Echevarría?')" class="mt-8 w-full btn-action py-3 rounded font-bold uppercase text-sm">
+                        <i class="fas fa-female mr-2"></i> IA: El Ajuar de Josefina (1916)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN VIDA Y LEGADO -->
+        <section id="life" class="hidden space-y-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8" data-aos="fade-up">
+                
+                <!-- La Gripe 1918 -->
+                <div class="bg-gray-800 text-white p-8 rounded-xl shadow-2xl relative overflow-hidden">
+                    <i class="fas fa-virus absolute -bottom-10 -right-10 text-9xl text-gray-700 opacity-20"></i>
+                    <h3 class="text-3xl font-serif text-red-400 mb-4 font-bold">1918: La Tragedia</h3>
+                    <p class="mb-4 text-gray-300 leading-relaxed">
+                        La pandemia de gripe golpeó fuerte a la familia en Zalduendo. La noche del 10 de Octubre murieron <strong>Telesforo</strong> (el abuelo) y la sirvienta.
+                    </p>
+                    <p class="mb-4 text-gray-300">
+                        El hijo primogénito, <strong>José</strong> (1 año), estuvo muy grave pero sobrevivió. El trauma les hizo abandonar el pueblo y mudarse a Vitoria.
+                    </p>
+                    <button onclick="askAI('¿Cómo afectó la pandemia de gripe de 1918 a la provincia de Álava?')" class="mt-4 bg-red-900/50 border border-red-500 text-red-100 px-4 py-2 rounded hover:bg-red-900 transition w-full text-left">
+                        <i class="fas fa-book-medical mr-2"></i> Contexto Histórico: Gripe en Álava
+                    </button>
+                </div>
+
+                <!-- Casa Ilárraza -->
+                <div class="bg-white p-8 rounded-xl card-pop">
+                    <h3 class="text-3xl font-serif text-forest-green mb-4 font-bold">La Casa de Ilárraza</h3>
+                    <p class="mb-4">
+                        En Noviembre de 1924 comienza la construcción. Allí nacería Finitxu en 1927.
+                    </p>
+                    <h4 class="font-bold text-old-gold mt-6 mb-2 uppercase text-sm tracking-widest">Devoción a Estíbaliz</h4>
+                    <p class="text-sm text-gray-600 mb-4">
+                        Ángel era médico de los monjes benedictinos (llegados en 1923). El santuario fue siempre lugar de encuentro familiar.
+                    </p>
+                    <div class="p-4 bg-vintage-cream border border-forest-green/20 rounded">
+                        <h5 class="font-bold text-forest-green text-sm mb-2">Los Hijos:</h5>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-forest-green text-white text-xs rounded">José (1917)</span>
+                            <span class="px-2 py-1 bg-forest-green text-white text-xs rounded">Ángel (1920)</span>
+                            <span class="px-2 py-1 bg-forest-green text-white text-xs rounded">Estíbaliz (1922)</span>
+                            <span class="px-2 py-1 bg-forest-green text-white text-xs rounded">Luis Mª (1924)</span>
+                            <span class="px-2 py-1 bg-forest-green text-white text-xs rounded">Finitxu (1927)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Chat Widget -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <!-- Ventana Chat -->
+        <div id="chat-window" class="hidden w-80 md:w-96 bg-white rounded-xl shadow-2xl border-2 border-forest-green flex flex-col mb-4 transition-all duration-300 origin-bottom-right transform scale-95 opacity-0">
+            <div class="bg-forest-green text-white p-4 rounded-t-lg flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold">Historiador Familiar</h3>
+                    <span class="text-xs text-green-200">Impulsado por Gemini 2.5 Flash</span>
+                </div>
+                <button onclick="toggleChat()" class="text-white hover:text-old-gold"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div id="chat-content" class="h-80 overflow-y-auto p-4 bg-vintage-cream text-sm space-y-3 no-scrollbar">
+                <div class="text-left">
+                    <div class="inline-block bg-white p-3 rounded-lg rounded-tl-none shadow border border-gray-200 text-gray-700">
+                        👋 ¡Hola! Soy el guardián de la memoria Guevara-Jauregui. Pregúntame sobre cualquier detalle del libro, las escrituras antiguas o la historia de Álava.
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 bg-white border-t border-gray-200 rounded-b-lg flex gap-2">
+                <input type="text" id="chat-input" placeholder="Ej: ¿Qué pasó con la casa de la calle Francia?" class="flex-1 bg-gray-100 border-0 rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-forest-green outline-none">
+                <button onclick="sendChat()" class="bg-old-gold text-white w-10 h-10 rounded-full hover:bg-sepia-ink transition flex items-center justify-center">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Botón Flotante -->
+        <button id="chat-btn" onclick="toggleChat()" class="w-16 h-16 bg-forest-green text-white rounded-full shadow-lg flex items-center justify-center text-2xl hover:bg-old-gold transition transform hover:scale-110">
+            <i class="fas fa-comment-dots"></i>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        // CONTEXTO COMPLETO DEL PDF (Extraído y estructurado)
+        const pdfContext = `
+            DOCUMENTO: NUESTRA FAMILIA GUEVARA JAUREGUI
+            
+            1. LINAJE GUEVARA:
+            - Santiago Guevara casó en 1826 con Gregoria Álvarez de Arcaya en Junguitu.
+            - Telesforo Guevara (1838-1918), hijo de Santiago, confitero en Vitoria. Compró casas en C/Barreras 11 (10.750 Ptas) y C/Francia 5 (11.500 Ptas). Fincas en Matauco, Arbulo. Murió de gripe el 10/10/1918 en Zalduendo junto a la sirvienta.
+            - Ángel Guevara Ajuria (1887-1965), médico. Tímido y mimado. Estudió en Valladolid (1913). Médico en Zalduendo y Junguitu. Gran afición: la caza.
+            
+            2. LINAJE JAUREGUI:
+            - Raimundo Jauregui (1750-1822).
+            - Pedro Valentín Jauregui "El Regalao" (1851-1930). Secretario Ayto Maestu, hombre de confianza de Juan Arana (Minas asfaltos Leorza, eléctrica). Casó con Guadalupe Zumalde (1868-1901). Guadalupe murió de tristeza tras morir su hija Inés de 1 año.
+            - Josefina Jauregui (1893-1975). Huérfana de madre a los 7 años. Vivía en Plazuela de los Guardias con abuelos.
+            
+            3. HISTORIA DE AMOR:
+            - Petición de mano: Marzo 1916. Cartas formales. Noticia en "Ecos Regionales" y "Heraldo Alavés". Ángel fue con su madre y tío en automóvil a Maestu.
+            - Boda: 17 Nov 1916 en Sto Cristo de Lezo. Estíbaliz estaba en obras.
+            - Ajuar: Ropa blanca de "Fernando Vicente", vestido de "Obdulia Echevarría".
+            - Viaje: Billete 6000km, 1ª clase.
+            
+            4. VIDA FAMILIAR:
+            - Hijos: José (1917, sobrevivió gripe), Ángel (1920), Estíbaliz (1922), Luis María (1924), Finitxu (1927).
+            - Casa Ilárraza: Terreno comprado Oct 1924, construcción Nov 1924.
+            - Religión: Devoción Virgen de Estíbaliz. Monjes llegaron 1923. Tías Estíbaliz y Finitxu ayudaban en la asociación de amigos.
+            - Final: Vivieron en Ilárraza hasta 1955, luego a Manuel Iradier 74, Vitoria.
+        `;
+
+        function showSection(id) {
+            ['home', 'guevara', 'jauregui', 'love', 'life'].forEach(s => {
+                document.getElementById(s).classList.add('hidden');
+            });
+            document.getElementById(id).classList.remove('hidden');
+            document.getElementById(id).classList.add('block');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Cerrar menú móvil si está abierto (lógica simple)
+        }
+
+        function toggleChat() {
+            const win = document.getElementById('chat-window');
+            if (win.classList.contains('hidden')) {
+                win.classList.remove('hidden');
+                setTimeout(() => {
+                    win.classList.remove('opacity-0', 'scale-95');
+                    win.classList.add('opacity-100', 'scale-100');
+                }, 10);
+            } else {
+                win.classList.remove('opacity-100', 'scale-100');
+                win.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => win.classList.add('hidden'), 300);
+            }
+        }
+
+        async function askAI(presetPrompt = null) {
+            const inputEl = document.getElementById('chat-input');
+            const prompt = presetPrompt || inputEl.value.trim();
+            if (!prompt) return;
+
+            // Mostrar chat
+            const win = document.getElementById('chat-window');
+            if (win.classList.contains('hidden')) toggleChat();
+
+            const contentEl = document.getElementById('chat-content');
+            
+            // Mensaje Usuario
+            contentEl.innerHTML += `
+                <div class="text-right">
+                    <div class="inline-block bg-forest-green text-white p-3 rounded-lg rounded-tr-none shadow text-left">
+                        ${prompt}
+                    </div>
+                </div>
+            `;
+            contentEl.scrollTop = contentEl.scrollHeight;
+            if(!presetPrompt) inputEl.value = '';
+
+            // Loading
+            const loadingId = 'loading-' + Date.now();
+            contentEl.innerHTML += `
+                <div id="${loadingId}" class="text-left">
+                    <div class="inline-block bg-gray-100 p-3 rounded-lg text-gray-500 text-xs italic">
+                        <i class="fas fa-feather-alt animate-bounce mr-2"></i> Consultando archivos familiares...
+                    </div>
+                </div>
+            `;
+            contentEl.scrollTop = contentEl.scrollHeight;
+
+            try {
+                const response = await fetch(`${API_BASE}/api/ask`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt, context: pdfContext })
+                });
+
+                if (!response.ok) throw new Error('Network response was not ok');
+                const data = await response.json();
+                
+                document.getElementById(loadingId).remove();
+                
+                // Respuesta IA
+                const htmlResponse = marked.parse(data.answer);
+                contentEl.innerHTML += `
+                    <div class="text-left animate-fade-in">
+                        <div class="inline-block bg-white p-3 rounded-lg rounded-tl-none shadow border border-gray-200 text-gray-700 prose prose-sm max-w-none">
+                            ${htmlResponse}
+                        </div>
+                    </div>
+                `;
+
+            } catch (error) {
+                document.getElementById(loadingId).remove();
+                
+                // FALLBACK MODO DEMO (Para que la preview funcione sin backend)
+                console.log("Modo Demo activado por error de conexión");
+                let demoAnswer = "Lo siento, en esta vista previa no puedo conectar con el cerebro de la IA. Una vez despliegues el proyecto en Vercel, podré responderte basándome en los documentos.";
+                
+                if (prompt.includes("médico")) demoAnswer = "En aquella época, ser médico rural como Ángel implicaba estar disponible 24/7. Ángel recorría los pueblos (Zalduendo, Junguitu) a caballo o en su coche, atendiendo desde partos hasta epidemias como la gripe del 18. Era una figura de gran autoridad pero también muy cercana.";
+                if (prompt.includes("ajuar")) demoAnswer = "El ajuar de Josefina era impresionante. Según las facturas de 'Fernando Vicente' y la modista Obdulia, incluyó ropa blanca de lujo y un vestido de ceremonia. Esto refleja la posición acomodada de la familia Jauregui gracias a los negocios de Pedro.";
+                if (prompt.includes("minas")) demoAnswer = "Las minas de asfalto de la zona de Maeztu y Leorza fueron un motor económico clave. Pedro Jauregui, como administrador de la sociedad de asfaltos, jugó un papel crucial en la industrialización de la Montaña Alavesa.";
+
+                contentEl.innerHTML += `
+                    <div class="text-left">
+                        <div class="inline-block bg-old-gold/10 p-3 rounded-lg rounded-tl-none border border-old-gold text-gray-800 text-sm">
+                            <strong><i class="fas fa-info-circle"></i> MODO DEMO (Preview):</strong><br>
+                            ${demoAnswer}
+                        </div>
+                    </div>
+                `;
+            }
+            contentEl.scrollTop = contentEl.scrollHeight;
+        }
+
+        function sendChat() {
+            askAI();
+        }
+
+        document.getElementById('chat-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendChat();
+        });
+    </script>
+</body>
+</html>
