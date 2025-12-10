@@ -33,8 +33,8 @@ export default async function handler(req, res) {
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-    // ❗ EL MODELO CORRECTO PARA NPM:
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+// Opción más potente (si tu API key tiene acceso)
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const systemInstruction = `
       Eres el guardián de la memoria de la familia Guevara-Jauregui.
