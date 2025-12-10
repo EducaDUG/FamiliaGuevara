@@ -58,22 +58,20 @@
             scroll-behavior: smooth;
         }
         .section {
-            /* FIX: Cambiado a min-height para que el contenido largo no se corte */
             min-height: 100vh; 
             width: 100%;
-            scroll-snap-align: start;
+            scroll-snap-align: start; 
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            /* Fondo de papel liso y limpio */
             background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
             border-bottom: 10px solid #1b3a2b; /* Separador forest */
         }
         .section.bg-ink {
             background-color: #1a1a1a;
-            background-image: none; /* Fondo liso negro */
+            background-image: none; 
         }
         .section.bg-forest {
             background-color: #1b3a2b;
@@ -87,6 +85,11 @@
             background-color: #c5a059;
             background-image: none;
         }
+        
+        .section:last-of-type, .section:nth-last-of-type(2) {
+             scroll-snap-align: none;
+        }
+
 
         /* TIPOGRAFÍA */
         .mega-title { font-size: clamp(4rem, 12vw, 12rem); line-height: 0.9; }
@@ -96,7 +99,7 @@
         
         /* BOTONES ELEGANTES */
         .btn-action {
-            background: #1a1a1a; color: #c5a059; border: 3px solid #c5a059; /* Borde dorado más prominente */
+            background: #1a1a1a; color: #c5a059; border: 3px solid #c5a059; 
             padding: 1rem 3rem; font-family: "Cinzel"; font-weight: 900;
             font-size: 1.5rem; cursor: pointer; transition: all 0.3s;
             text-transform: uppercase; letter-spacing: 2px; border-radius: 12px;
@@ -139,18 +142,60 @@
         
         /* Interactive element adjustments */
         .birth-item {
-            cursor: grab;
-            background-color: #f7f1e3;
-            color: #1a1a1a;
+            /* Eliminado cursor:grab, usamos cursor:pointer para el click */
+            cursor: pointer; 
+            background-color: white; /* Por defecto en el pool */
+            color: #1a1a1a; /* ink */
             border: 2px solid #c5a059;
-            padding: 0.8rem;
+            padding: 0.8rem 0.5rem;
             border-radius: 8px;
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.3rem;
+            height: 60px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.2s ease-in-out; /* Animación para mover */
         }
-        .birth-item.bg-green-700 { background-color: #1b3a2b; color: white; }
-        .birth-item.bg-red-700 { background-color: #631818; color: white; }
-        .birth-item.bg-green-900 { background-color: #14532d; color: white; }
+        /* Estilos de estado al ser arrastrado o colocado */
+        .birth-item.bg-green-700 { background-color: #1b3a2b; color: white; border-color: #f7f1e3; } /* En slot, Temporal */
+        .birth-item.bg-red-700 { background-color: #631818; color: white; border-color: #f7f1e3; }
+        .birth-item.bg-green-900 { background-color: #14532d; color: white; border-color: #f7f1e3; } /* En slot, Correcto */
+
+        /* Contenedor de elementos para que quede claro el "pool" */
+        #draggable-birth {
+            border: 2px dashed #1b3a2b;
+            padding: 1rem;
+            border-radius: 10px;
+            background-color: #fcf8f0;
+        }
+        
+        /* Drop Targets */
+        .drop-target {
+            border: 3px dashed #c5a059;
+            background-color: rgba(197, 160, 89, 0.1);
+            min-height: 4rem;
+            border-radius: 8px;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .drop-target span { 
+            color: #1b3a2b; 
+            font-weight: 700; 
+            font-family: 'Cinzel', serif; 
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .drop-target .birth-item {
+            width: 100%;
+            height: auto;
+            margin: 0;
+            cursor: pointer;
+        }
         
         /* Hitos options custom styling */
         .hitos-option-card {
@@ -171,15 +216,6 @@
             border-color: #1a1a1a;
             box-shadow: 0 0 15px rgba(197, 160, 89, 0.7);
         }
-        
-        .drop-target {
-            border: 3px dashed #c5a059;
-            background-color: rgba(197, 160, 89, 0.1);
-            min-height: 4rem;
-            border-radius: 8px;
-            padding: 0.5rem;
-        }
-        .drop-target span { color: #1b3a2b; font-weight: 500; font-family: 'Cormorant Garamond', serif; }
         
         /* Modal Style for "Saber Más" */
         .modal {
@@ -428,23 +464,23 @@
                 <span class="text-gold font-bold uppercase tracking-widest text-xl border-b-4 border-gold">Capítulo 7: La Preciosa Casa</span>
                 <h2 class="text-white text-7xl mb-8">Ilárraza y la Benjamina</h2>
                 <p class="text-3xl mb-12">
-                    En **noviembre de 1924** comienza la construcción de su hogar definitivo en Ilárraza. Allí nacería la última hija, Finitxu (1927).
+                    En noviembre de 1924 comienza la construcción de su hogar definitivo en Ilárraza. Allí nacería la última hija, Finitxu (1927).
                 </p>
                 
-                <!-- ACTIVIDAD 6: ORDENAR NACIMIENTOS -->
+                <!-- ACTIVIDAD 6: ORDENAR NACIMIENTOS (Línea 415 aproximadamente) -->
                 <div class="game-card mx-auto border-gold bg-white">
                     <div class="flex items-center mb-6 justify-center">
                         <div class="p-3 bg-forest rounded-full mr-4"><i class="fas fa-sort-numeric-up-alt text-2xl text-white"></i></div>
                         <h3 class="font-display text-3xl font-bold text-forest">Desafío: Orden de Nacimiento</h3>
                     </div>
-                    <p class="mb-6 text-gray-700 text-2xl">Haz clic en los hijos para colocarlos en orden cronológico (1º al 5º):</p>
+                    <p class="mb-6 text-gray-700 text-2xl">Haz clic en los nombres de los hijos para colocarlos en orden cronológico (1º al 5º):</p>
                     
                     <div id="birth-sequence-container">
-                        <!-- Draggable Items Container -->
+                        <!-- Contenedor de elementos desordenados (Se llena por JS) -->
                         <div class="grid grid-cols-5 gap-2 justify-center max-w-4xl mx-auto mb-6" id="draggable-birth">
-                            <!-- ITEMS ARE NOW CREATED BY JS -->
+                            <!-- Los items interactivos (nombres) se generan aquí -->
                         </div>
-                        <!-- Drop Targets -->
+                        <!-- Slots para ordenar (Drop Targets) -->
                         <div id="birth-drop-targets" class="grid grid-cols-5 gap-2 max-w-4xl mx-auto">
                             <div class="drop-target" data-target="1"><span class="text-lg">1º</span></div>
                             <div class="drop-target" data-target="2"><span class="text-lg">2º</span></div>
@@ -484,7 +520,7 @@
         </div>
 
         <!-- 12. MUDANZA FINAL Y EXAMEN -->
-        <div class="section bg-gold">
+        <div class="section bg-gold" style="border-bottom: none;">
             <div class="max-w-[1200px] w-full text-center">
                 <span class="text-ink font-bold uppercase tracking-widest text-xl border-b-4 border-ink">Capítulo 9: La Despedida</span>
                 <h2 class="text-ink text-7xl mb-8">Manuel Iradier 74</h2>
@@ -547,6 +583,7 @@
         let orderStep = 0; // State for Order activity
 
         // Birth data used for the new interactive element (cleaned of dates in display text)
+        // El orden correcto es 1. José (1917), 2. Ángel (1920), 3. Estíbaliz (1922), 4. Luis María (1924), 5. Finitxu (1927)
         const BIRTH_ITEMS_DATA = [
             { name: 'José', order: '1', display: 'José (Zalduendo)' },
             { name: 'Ángel', order: '2', display: 'Ángel (Vitoria)' },
@@ -574,8 +611,9 @@
 
         // Local TTS (Voz de Álava/Euskera)
         function narrateChapter(button) {
+            // ... (TTS logic remains the same)
             if (!('speechSynthesis' in window)) {
-                alert("La función de audio no está disponible en este navegador.");
+                console.log("La función de audio no está disponible en este navegador.");
                 return;
             }
 
@@ -593,7 +631,6 @@
             }
 
             const utterance = new SpeechSynthesisUtterance(textToSpeak);
-            // Intentamos usar acento de Álava (es-ES) o similar para el contexto del norte
             utterance.lang = 'es-ES'; 
             utterance.rate = 0.95; 
 
@@ -634,8 +671,8 @@
         // 2. Conecta la Historia (Hitos)
         function toggleHitos(btn) {
              if (btn.disabled) return;
-            // Toggle selection class
-            btn.classList.toggle('selected');
+             // Toggle selection class
+             btn.classList.toggle('selected');
         }
 
         function checkFinalConnect() {
@@ -657,8 +694,7 @@
                         btn.style.borderColor = '#991b1b'; // Incorrect border
                     }
                 } else if (correctItems.includes(item)) {
-                    // Highlight missing correct answers
-                    btn.style.borderColor = '#c5a059'; 
+                    // Highlight missing correct answers (no visible border change needed for unselected correct)
                 }
             });
 
@@ -703,72 +739,108 @@
             const dropTargets = document.querySelectorAll('#birth-drop-targets .drop-target');
             const itemsContainer = document.getElementById('draggable-birth');
             
-            // Clear and repopulate items for proper click functionality
+            if (!itemsContainer) {
+                console.error("Contenedor #draggable-birth no encontrado.");
+                return;
+            }
+
+            // Limpiar y repoblar elementos
             itemsContainer.innerHTML = '';
             
-            // Shuffle and place items
+            // Mezclar y colocar items
             const shuffledItems = [...BIRTH_ITEMS_DATA].sort(() => Math.random() - 0.5);
 
             shuffledItems.forEach(item => {
                 const div = document.createElement('div');
-                div.className = "birth-item text-ink cursor-pointer hover:bg-gold hover:text-white transition shadow-sm";
-                div.textContent = item.display; // Name and Location, NO DATE
+                div.className = "birth-item text-ink transition shadow-sm";
+                div.textContent = item.display; 
                 div.dataset.order = item.order;
                 div.dataset.name = item.name;
-                // Add GSAP Draggable for visual flair, even if logic uses click
-                Draggable.create(div, { type: "x,y", bounds: itemsContainer.closest('.game-card') });
+
+                // NO USAMOS DRAGGABLE, SOLO CLICK PARA SIMPLIFICAR
+                // Draggable.create(div, { type: "x,y", bounds: itemsContainer.closest('.game-card') }); 
 
                 div.onclick = function() { clickToMoveItem(this, dropTargets, itemsContainer); };
                 itemsContainer.appendChild(div);
             });
 
-            // Set up click/move logic
+            // Función de movimiento al hacer click
             function clickToMoveItem(item, targets, source) {
+                // Si el item está en un drop target, lo devolvemos al pool
                 if (item.parentElement.classList.contains('drop-target')) {
-                    // Return item to source pool
                     source.appendChild(item);
-                    item.classList.remove('bg-green-900', 'bg-red-700', 'border-green-400', 'border-red-400');
+                    // Restaurar clases al estado inicial del pool
+                    item.classList.remove('bg-green-700', 'bg-red-700', 'bg-green-900');
                     item.classList.add('bg-white');
+                    // Volver a añadir el botón de orden (solo si fue removido)
+                    if(item.parentElement.querySelector('span')) {
+                        item.parentElement.prepend(item.parentElement.querySelector('span'));
+                    }
                 } else {
-                    // Move to first empty target
+                    // Si el item está en el pool, lo movemos al primer target vacío
                     for(let t of targets) {
-                        // Check if only the span is inside (meaning it's empty)
+                        // Un target se considera vacío si solo contiene el <span> con el número de orden
                         if(t.children.length === 1 && t.children[0].tagName === 'SPAN') { 
                             t.appendChild(item);
                             item.classList.remove('bg-white');
                             item.classList.add('bg-green-700');
+                            
+                            // Ocultar el número de orden (span) mientras el nombre está dentro
+                            const spanElement = t.querySelector('span');
+                            if (spanElement) {
+                                t.removeChild(spanElement);
+                            }
+                            
                             break;
                         }
                     }
                 }
             }
 
+            // Función de validación
             document.getElementById('check-birth-sequence').onclick = function() {
                 let correct = 0;
                 let totalItems = BIRTH_ITEMS_DATA.length;
+                let allSlotsFilled = true;
 
                 dropTargets.forEach(t => {
                     const item = t.querySelector('.birth-item');
                     if (item) {
                         const expectedOrder = t.dataset.target;
+                        
+                        // Añadir el span de orden de nuevo antes de colorear, para que el usuario sepa qué casilla es
+                        if (!t.querySelector('span')) {
+                           const orderSpan = document.createElement('span');
+                           orderSpan.className = 'text-lg';
+                           orderSpan.textContent = `${expectedOrder}º`;
+                           t.prepend(orderSpan);
+                        }
+
                         if (item.dataset.order === expectedOrder) {
                             correct++;
-                            item.classList.remove('bg-green-700', 'bg-red-700', 'border-red-400');
-                            item.classList.add('bg-green-900', 'border-green-400');
+                            item.classList.remove('bg-green-700', 'bg-red-700');
+                            item.classList.add('bg-green-900');
                         } else {
-                            item.classList.remove('bg-green-700', 'bg-green-900', 'border-green-400');
-                            item.classList.add('bg-red-700', 'border-red-400');
+                            item.classList.remove('bg-green-700', 'bg-green-900');
+                            item.classList.add('bg-red-700');
                         }
+                    } else {
+                        allSlotsFilled = false;
                     }
                 });
 
                 const feedback = document.getElementById('birth-sequence-feedback');
+                
+                if(!allSlotsFilled) {
+                    showFeedback('birth-sequence-feedback', false, 'Fallo: Debes llenar todas las posiciones (5 hijos).');
+                    return;
+                }
+
                 if(correct === totalItems) {
-                    feedback.innerHTML = `<span class="text-green-400">¡Cronología Familiar Perfecta!</span>`;
-                    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } }); // Call window.confetti
+                    showFeedback('birth-sequence-feedback', true, '¡Cronología Familiar Perfecta!');
                     this.disabled = true;
                 } else {
-                    feedback.innerHTML = `<span class="text-red-400">Fallo en ${totalItems - correct} posiciones. Revisa el orden.</span>`;
+                    showFeedback('birth-sequence-feedback', false, `Fallo en ${totalItems - correct} posiciones. Revisa el orden y el código de colores.`);
                 }
             };
         }
@@ -778,10 +850,10 @@
             document.querySelectorAll('.felipa-option').forEach(b => b.disabled = true);
             if (isCorrect) {
                  showFeedback('fb-felipa', true, '¡Correcto! Pulmonía por falta de medicación.');
-                 btn.classList.add('bg-green-900', 'border-green-400');
+                 btn.classList.add('bg-green-900', 'border-green-400', 'text-white');
             } else {
                  showFeedback('fb-felipa', false, 'Incorrecto. La causa fue la falta de medicación.');
-                 btn.classList.add('bg-wine', 'border-wine');
+                 btn.classList.add('bg-wine', 'border-wine', 'text-white');
             }
         }
 
@@ -793,7 +865,6 @@
                 document.getElementById('quiz-container').style.display = 'none';
                 document.getElementById('quiz-win').style.display = 'block';
                 document.getElementById('final-score').innerText = `${score} / ${quizData.length * 100} puntos`;
-                // Confetti is triggered by ansQuiz function
                 return;
             }
             const q = quizData[qIdx];
@@ -824,7 +895,7 @@
                 score += 100;
                 btn.style.backgroundColor = '#dcfce7'; // Light green
                 btn.style.borderColor = '#166534'; // Dark green
-                confetti({ particleCount: 50, spread: 30, origin: { y: 0.5, x: 0.5 } }); // Call window.confetti
+                confetti({ particleCount: 50, spread: 30, origin: { y: 0.5, x: 0.5 } }); 
             } else {
                 btn.style.backgroundColor = '#fee2e2'; // Light red
                 btn.style.borderColor = '#991b1b'; // Dark red
