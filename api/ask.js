@@ -9,7 +9,9 @@ export default async function handler(req, res) {
     const allowedOrigins = [
         'http://localhost:5500',
         'http://127.0.0.1:5500',
-        'https://educadug.github.io'
+        'https://educadug.github.io',
+        'https://familia-guevara-git-main-diego-s-projects-f00e31fc.vercel.app', // URL anterior
+        'https://familia-guevara.vercel.app' // Nueva URL limpia añadida
     ];
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin) || !origin) {
