@@ -1,0 +1,8 @@
+{
+  "name": "familia-guevara-ia",
+  "version": "1.0.0",
+  "description": "Chatbot familiar con IA",
+  "dependencies": {
+    "@google/generative-ai": "^0.1.3"
+  }
+}
