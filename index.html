@@ -3,655 +3,1081 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historia Familia Guevara Jauregui</title>
-    
-    <!-- Tailwind CSS -->
+    <title>Legado Guevara-Jáuregui: Documental Interactivo</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts & Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    
-    <!-- AOS Animation -->
+    <!-- Google Fonts: Playfair Display (Titles) & Lato (Body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <!-- AOS CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
     
-    <!-- Markdown Parser (Opcional, mantenido por si acaso se usa en futuro contenido estático) -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'vintage-cream': '#fdfbf7',
-                        'sepia-ink': '#2c241b',
-                        'old-gold': '#c5a059',
-                        'forest-green': '#2d4a3e',
-                        'burgundy': '#7a2021',
-                        'paper-texture': '#f4f1ea'
-                    },
-                    fontFamily: {
-                        'serif': ['"Playfair Display"', 'serif'],
-                        'sans': ['"Lato"', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
     <style>
-        body { background-color: #fdfbf7; color: #2c241b; }
+        /* --- HISTORICAL DOCUMENTARY PALETTE --- */
+        :root {
+            --color-bg-dark: #1c1917;    /* Stone 900 (Warm Black) */
+            --color-card-bg: rgba(28, 25, 23, 0.98); /* Stone 900 opacity */
+            --color-text-cream: #f5f5f4; /* Stone 100 (Cream/Paper) */
+            --color-gold-antique: #a16207; /* Amber 700 (Antique Gold - Deeper) */
+            --color-gold-light: #fcd34d;   /* Amber 300 (Highlight - Brighter) */
+            --color-green-forest: #14532d; /* Green 900 (Deep Forest) */
+            --color-green-light: #15803d;  /* Green 700 (Button Hover) */
+        }
         
-        /* Estilos 3D Pop */
-        .card-pop {
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            border: 2px solid #2d4a3e;
-            box-shadow: 8px 8px 0px #c5a059;
-            background: white;
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--color-bg-dark);
+            color: var(--color-text-cream);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Typography Override for Historical Feel */
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Large Typography Mandate */
+        h1 { font-size: 3.8rem !important; line-height: 1.1 !important; }
+        h2 { font-size: 2.8rem !important; margin-bottom: 1.5rem !important; }
+        p, li { font-size: 1.6rem !important; line-height: 1.8 !important; color: #d6d3d1; }
+
+        /* Documentary Card Styling */
+        .card-docu {
+            background: var(--color-card-bg);
+            border: 1px solid var(--color-gold-antique);
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
             position: relative;
             overflow: hidden;
-        }
-        .card-pop:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 12px 12px 0px #2d4a3e;
-        }
-
-        .btn-action {
-            background-color: #2d4a3e;
-            color: white;
-            border: 2px solid #2d4a3e;
-            box-shadow: 4px 4px 0px #c5a059;
-            transition: all 0.2s;
-        }
-        .btn-action:active {
-            transform: translate(4px, 4px);
-            box-shadow: 0px 0px 0px #c5a059;
-        }
-
-        /* Modal Styles */
-        .modal-overlay {
-            background-color: rgba(44, 36, 27, 0.8);
-            backdrop-filter: blur(4px);
+            transition: transform 0.3s ease;
         }
         
-        /* Ocultar scrollbar */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* Ornamental accent line for cards */
+        .card-docu::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-gold-light), var(--color-gold-antique), var(--color-gold-light));
+        }
+
+        .card-docu:hover {
+            transform: translateY(-3px);
+            border-color: var(--color-gold-light);
+        }
+
+        /* Buttons: Elegant & Historical */
+        .btn-hist {
+            background-color: var(--color-green-forest);
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            padding: 0.8rem 2.5rem;
+            border: 1px solid var(--color-gold-antique);
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            text-transform: uppercase;
+            font-size: 1.2rem;
+        }
+
+        .btn-hist:hover {
+            background-color: var(--color-green-light);
+            border-color: var(--color-gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.4);
+            color: var(--color-gold-light);
+        }
+        
+        .btn-hist:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Scrollytelling Section Styling */
+        .story-section {
+            min-height: 100vh;
+            padding: 6rem 0;
+            opacity: 0; 
+            transform: translateY(50px);
+            border-left: 2px solid var(--color-gold-antique); /* Subtle timeline line */
+            margin-left: 1rem;
+            padding-left: 2rem;
+        }
+        
+        .story-section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Interactive Elements */
+        .draggable-item {
+            cursor: grab;
+            background-color: #292524; /* Stone 800 */
+            border: 1px solid var(--color-gold-light); /* Highlight for draggable */
+            padding: 1rem;
+            margin: 0.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            font-family: 'Lato', sans-serif;
+            font-size: 1.3rem;
+            color: var(--color-gold-light);
+        }
+        
+        .draggable-item:active { cursor: grabbing; }
+
+        .drop-target {
+            border: 2px dashed var(--color-gold-antique);
+            background-color: rgba(161, 98, 7, 0.1); /* Light gold accent bg */
+            min-height: 6rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            margin-top: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        /* Custom Range Slider Styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: var(--color-gold-light);
+            cursor: pointer;
+            margin-top: -10px;
+            box-shadow: 0 0 10px rgba(252, 211, 77, 0.5);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: var(--color-green-forest);
+            border-radius: 2px;
+        }
+        
+        /* Loading spinner is now local (no API) */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--color-gold-light);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
-<body class="font-sans antialiased selection:bg-old-gold selection:text-white">
+<body>
 
-    <!-- Navegación -->
-    <nav class="fixed w-full z-50 bg-forest-green/95 backdrop-blur text-vintage-cream shadow-lg border-b-4 border-old-gold">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center cursor-pointer" onclick="showSection('home')">
-                <i class="fas fa-tree text-old-gold text-2xl mr-2"></i>
-                <span class="font-serif text-xl font-bold tracking-wider hidden md:inline">FAMILIA GUEVARA JAUREGUI</span>
-                <span class="font-serif text-xl font-bold tracking-wider md:hidden">GUEVARA JAUREGUI</span>
+    <!-- Navigation Bar -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 p-4 bg-stone-900 border-b-4 border-amber-500 shadow-2xl" data-aos="fade-down">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#home" class="text-2xl font-serif font-bold tracking-widest text-amber-300 hover:text-amber-100 transition">
+                <i class="fas fa-scroll mr-2"></i> GUEVARA-JÁUREGUI
+            </a>
+            <div class="hidden md:flex space-x-8 text-lg font-serif">
+                <a href="#home" class="text-stone-300 hover:text-amber-300 transition">Portada</a>
+                <a href="#cronicas" class="text-stone-300 hover:text-amber-300 transition">La Historia</a>
+                <a href="#simulator" class="text-stone-300 hover:text-amber-300 transition">Simulación</a>
+                <a href="#trivia" class="text-stone-300 hover:text-amber-300 transition">Trivial Familiar</a>
             </div>
-            <div class="hidden md:flex space-x-6 text-sm font-bold uppercase tracking-widest">
-                <button onclick="showSection('guevara')" class="hover:text-old-gold transition">Guevara</button>
-                <button onclick="showSection('jauregui')" class="hover:text-old-gold transition">Jauregui</button>
-                <button onclick="showSection('love')" class="hover:text-old-gold transition">Historia</button>
-                <button onclick="showSection('life')" class="hover:text-old-gold transition">Vida</button>
-                <button onclick="showSection('quiz')" class="bg-old-gold text-white px-3 py-1 rounded hover:bg-white hover:text-old-gold transition">Quiz</button>
-            </div>
-            <button onclick="toggleMobileMenu()" class="md:hidden text-vintage-cream text-xl"><i class="fas fa-bars"></i></button>
-        </div>
-        <!-- Menú Móvil -->
-        <div id="mobile-menu" class="hidden md:hidden bg-forest-green border-t border-old-gold p-4 space-y-2">
-            <button onclick="showSection('guevara')" class="block w-full text-left py-2 hover:text-old-gold">Los Guevara</button>
-            <button onclick="showSection('jauregui')" class="block w-full text-left py-2 hover:text-old-gold">Los Jauregui</button>
-            <button onclick="showSection('love')" class="block w-full text-left py-2 hover:text-old-gold">Historia de Amor</button>
-            <button onclick="showSection('life')" class="block w-full text-left py-2 hover:text-old-gold">Vida y Legado</button>
-            <button onclick="showSection('quiz')" class="block w-full text-left py-2 text-old-gold font-bold">Jugar al Quiz</button>
         </div>
     </nav>
 
-    <!-- Contenedor Principal -->
-    <main class="pt-24 pb-12 px-4 min-h-screen container mx-auto">
-
-        <!-- HOME SECTION -->
-        <section id="home" class="animate-fade-in">
-            <div class="text-center py-10" data-aos="zoom-in">
-                <h1 class="font-serif text-5xl md:text-7xl font-bold text-forest-green mb-4">Nuestras Raíces</h1>
-                <div class="w-24 h-1 bg-old-gold mx-auto mb-6"></div>
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="min-h-screen flex items-center justify-center p-8 bg-cover bg-center bg-fixed" style="background-image: linear-gradient(rgba(28, 25, 23, 0.85), rgba(28, 25, 23, 0.7)), url('https://placehold.co/1920x1080/292524/78716c');">
+            <div class="text-center max-w-5xl" data-aos="fade-up" data-aos-duration="1500">
+                <div class="mb-4 text-amber-500 font-serif text-2xl tracking-[0.3em] uppercase">Documental Interactivo</div>
+                <h1 class="font-black mb-8 text-amber-100 leading-tight drop-shadow-lg">Crónica de un Linaje Antiguo y su Fundación</h1>
+                <p class="text-2xl mb-12 text-stone-300 font-light italic">Un recorrido por la memoria de Ángel Guevara Ajuria y Josefina Jáuregui Zumalde.</p>
                 
-                <div class="relative max-w-2xl mx-auto mb-12">
-                     <p class="mt-4 text-xl md:text-2xl text-sepia-ink italic">
-                        "Historias de la familia Guevara Jauregui basadas en recuerdos de las tías Estibaliz y Finitxu..."
-                    </p>
-                </div>
-                
-                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                    <!-- Card 1 -->
-                    <div class="card-pop p-8 rounded-xl cursor-pointer group" onclick="showSection('guevara')">
-                        <div class="w-16 h-16 bg-forest-green rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-old-gold transition">
-                            <i class="fas fa-user-md text-white text-2xl"></i>
-                        </div>
-                        <h3 class="font-serif text-2xl font-bold mb-2">Ángel Guevara</h3>
-                        <p class="text-sm text-gray-600">El médico de Zalduendo. Linaje de confiteros.</p>
-                        <span class="text-xs text-old-gold font-bold mt-2 block uppercase">Ver Historia &rarr;</span>
-                    </div>
+                <button onclick="scrollToSection('#cronicas')" class="btn-hist text-2xl px-12 py-5 shadow-2xl border-2">
+                    <i class="fas fa-book-reader mr-3"></i> Abrir el Archivo
+                </button>
 
-                    <!-- Card 2 -->
-                    <div class="card-pop p-8 rounded-xl cursor-pointer group" onclick="showSection('jauregui')">
-                        <div class="w-16 h-16 bg-forest-green rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-old-gold transition">
-                            <i class="fas fa-bolt text-white text-2xl"></i>
-                        </div>
-                        <h3 class="font-serif text-2xl font-bold mb-2">Josefina Jauregui</h3>
-                        <p class="text-sm text-gray-600">Hija de "El Regalao". Minas y electricidad.</p>
-                        <span class="text-xs text-old-gold font-bold mt-2 block uppercase">Ver Historia &rarr;</span>
+                <div class="mt-24 grid md:grid-cols-3 gap-10 text-center">
+                    <div class="card-docu p-8 bg-opacity-90">
+                        <i class="fas fa-landmark text-4xl text-amber-700 mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2 text-amber-100">Historia Viva</h3>
+                        <p class="text-lg text-stone-400">Desde la confitería de 1880 hasta la casa de Ilárraza.</p>
                     </div>
-
-                    <!-- Card 3 -->
-                    <div class="card-pop p-8 rounded-xl cursor-pointer group" onclick="showSection('quiz')">
-                        <div class="w-16 h-16 bg-forest-green rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-old-gold transition">
-                            <i class="fas fa-puzzle-piece text-white text-2xl"></i>
-                        </div>
-                        <h3 class="font-serif text-2xl font-bold mb-2">¿Cuánto sabes?</h3>
-                        <p class="text-sm text-gray-600">Pon a prueba tu conocimiento familiar.</p>
-                        <span class="text-xs text-old-gold font-bold mt-2 block uppercase">Jugar Ahora &rarr;</span>
+                    <div class="card-docu p-8 bg-opacity-90">
+                        <i class="fas fa-hourglass-half text-4xl text-amber-700 mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2 text-amber-100">Causa y Efecto</h3>
+                        <p class="text-lg text-stone-400">Simula cómo la historia podría haber cambiado.</p>
+                    </div>
+                    <div class="card-docu p-8 bg-opacity-90">
+                        <i class="fas fa-brain text-4xl text-amber-700 mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2 text-amber-100">Sabiduría</h3>
+                        <p class="text-lg text-stone-400">Demuestra cuánto conoces tus raíces.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECCIÓN GUEVARA -->
-        <section id="guevara" class="hidden space-y-12">
-            <div class="text-center mb-12" data-aos="fade-down">
-                <span class="text-old-gold font-bold tracking-widest uppercase">1826 - 1918</span>
-                <h2 class="font-serif text-5xl text-forest-green font-bold">El Linaje Guevara</h2>
-            </div>
+        <!-- Storytelling Section (Scrollytelling) -->
+        <section id="cronicas" class="p-8 md:p-16 relative">
+            <!-- Decorative Background Element - Removed opaque texture based on user feedback -->
+            <!-- <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png');"></div> -->
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-                <div class="space-y-6">
-                    <!-- Telesforo Card -->
-                    <div class="card-pop p-6 rounded-lg bg-white group cursor-pointer" onclick="openModal('telesforo')">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-xl font-bold text-forest-green">Telesforo Guevara</h3>
-                            <i class="fas fa-info-circle text-old-gold animate-pulse"></i>
-                        </div>
-                        <p class="text-gray-600 text-sm mb-4">Confitero y propietario. Adquirió importantes casas en Vitoria.</p>
-                        <button class="mt-4 w-full text-center text-xs font-bold text-forest-green uppercase border-t pt-2 group-hover:text-old-gold">
-                            Click para saber más detalles
-                        </button>
-                    </div>
+            <h2 class="text-center mb-20 text-amber-500 italic" data-aos="fade-up">Capítulo I: El Origen y la Prosperidad</h2>
+            <!-- DIAGRAMA: Árbol Genealógico Guevara-Jáuregui -->
+            <p class="text-center text-stone-500 mb-12">[Aquí iría el diagrama del árbol genealógico Guevara-Jáuregui desde 1750 a 1927]</p>
 
-                    <!-- Ángel Card -->
-                    <div class="card-pop p-6 rounded-lg bg-white group cursor-pointer" onclick="openModal('angel')">
-                         <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-xl font-bold text-forest-green">Ángel Guevara Ajuria</h3>
-                            <i class="fas fa-info-circle text-old-gold animate-pulse"></i>
+            <div id="story-container" class="max-w-5xl mx-auto">
+                
+                <!-- 1. ORÍGENES GUEVARA -->
+                <div class="story-section flex flex-col justify-center" data-aos="fade-up">
+                    <div class="card-docu p-12" id="section-1">
+                        <h3 class="text-4xl font-bold text-amber-400 mb-6">El Linaje Guevara: Confiteros de Vitoria</h3>
+                        <p>Nuestra historia documentada comienza en <strong>1826</strong>, en Junguitu. Sin embargo, fue <strong>Telesforo Guevara</strong> (nacido en 1843) quien consolidó el nombre de la familia en la capital.</p>
+                        <p class="mt-4">Telesforo no era un simple vecino; era un próspero <strong>Confitero</strong> con visión comercial. Su éxito le permitió adquirir múltiples propiedades estratégicas en la Vitoria del siglo XIX.</p>
+                        <div class="mt-8 flex justify-end">
+                            <button class="text-amber-500 hover:text-amber-300 text-lg flex items-center transition btn-tts" onclick="speakText(this)">
+                                <i class="fas fa-volume-up mr-2"></i> Escuchar relato
+                                <div class="loader hidden ml-2"></div>
+                            </button>
                         </div>
-                        <p class="text-gray-600 text-sm mb-4">Médico titular (1887-1965). Estudió en Valladolid.</p>
-                        <button class="mt-4 w-full text-center text-xs font-bold text-forest-green uppercase border-t pt-2 group-hover:text-old-gold">
-                            Click para saber más detalles
-                        </button>
                     </div>
                 </div>
 
-                <div class="bg-paper-texture p-8 rounded-lg border border-forest-green/20" data-aos="fade-left">
-                    <h3 class="font-serif text-2xl font-bold mb-4 text-forest-green">Curiosidades del Linaje</h3>
-                    <ul class="space-y-4 text-sm text-sepia-ink">
-                        <li class="flex gap-3">
-                            <i class="fas fa-home text-old-gold mt-1"></i>
-                            <span><strong>El Patrimonio:</strong> Telesforo compró la casa de C/Barreras 11 por 10.750 Ptas en 1880, y la de C/Francia 5 por 11.500 Ptas en 1899.</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <i class="fas fa-skull-crossbones text-old-gold mt-1"></i>
-                            <span><strong>La Gripe de 1918:</strong> En octubre de 1918, la epidemia se llevó a Telesforo y a la sirvienta en Zalduendo. José (1 año) sobrevivió de milagro.</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <i class="fas fa-graduation-cap text-old-gold mt-1"></i>
-                            <span><strong>Educación:</strong> Ángel era muy tímido y mimado. Un cura amigo de la familia era quien le "ponía límites".</span>
-                        </li>
-                    </ul>
+                <!-- ACTIVIDAD 1: El Precio Justo -->
+                <div class="story-section flex flex-col justify-center" data-aos="fade-right">
+                    <div class="card-docu p-12 bg-gradient-to-br from-stone-900 to-stone-800 border-amber-800">
+                        <div class="flex items-center mb-6">
+                            <div class="p-3 bg-amber-900 rounded-full mr-4"><i class="fas fa-search-dollar text-2xl text-amber-200"></i></div>
+                            <h3 class="text-3xl font-bold text-amber-100">Desafío: El Valor de la Historia</h3>
+                        </div>
+                        <p class="mb-8">En 1880, Telesforo compró la casa de la Calle Barreras. ¿Puedes estimar cuánto pagó en Pesetas de la época?</p>
+                        
+                        <div id="price-slider-container" class="bg-stone-800 p-8 rounded-xl border border-stone-700">
+                            <input type="range" id="price-slider" min="5000" max="15000" value="8000" step="50" class="w-full h-4 mb-6">
+                            <div class="flex justify-between text-stone-500 text-sm font-mono mb-2">
+                                <span>5.000 Ptas</span>
+                                <span>15.000 Ptas</span>
+                            </div>
+                            <p class="text-center mt-2 text-3xl font-serif text-amber-400">Tu estimación: <span id="price-value">8000</span> Ptas.</p>
+                            
+                            <button id="check-price" class="btn-hist w-full mt-8">Comprobar Archivo</button>
+                            <p id="price-feedback" class="mt-6 text-center text-xl font-bold min-h-[3rem]"></p>
+                        </div>
+                    </div>
                 </div>
+                
+                <!-- 2. PEDRO JÁUREGUI -->
+                <div class="story-section flex flex-col justify-center" data-aos="fade-left">
+                    <div class="card-docu p-12" id="section-2">
+                        <h3 class="text-4xl font-bold text-amber-400 mb-6">Pedro Jáuregui: "El Regalao"</h3>
+                        <p>En la rama materna, destaca la figura imponente de <strong>Pedro Valentín Jáuregui Querejazu</strong> (1851-1930). Hombre de influencia política y secretario del Ayuntamiento de Maestu.</p>
+                        <p class="mt-4">Su apodo, <strong>"El Regalao"</strong>, provenía de su acomodada posición: vivía de las rentas de un vasto patrimonio inmobiliario e industrial. Fue un pionero que trajo la modernidad a la villa.</p>
+                        <div class="mt-8 flex justify-end">
+                            <button class="text-amber-500 hover:text-amber-300 text-lg flex items-center transition btn-tts" onclick="speakText(this)">
+                                <i class="fas fa-volume-up mr-2"></i> Escuchar relato
+                                <div class="loader hidden ml-2"></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACTIVIDAD 2: Hitos -->
+                <div class="story-section flex flex-col justify-center" data-aos="fade-up">
+                    <div class="card-docu p-12 bg-gradient-to-br from-stone-900 to-stone-800 border-green-900">
+                        <div class="flex items-center mb-6">
+                            <div class="p-3 bg-green-900 rounded-full mr-4"><i class="fas fa-industry text-2xl text-green-200"></i></div>
+                            <h3 class="text-3xl font-bold text-amber-100">Memoria Industrial</h3>
+                        </div>
+                        <p class="mb-6">Pedro impulsó dos industrias clave en Maestu. Selecciónalas:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <button class="hitos-option btn-hist bg-stone-700 hover:bg-stone-600 border-stone-600 normal-case text-left pl-6" data-answer="Fábrica de Harinas">Fábrica de Harinas</button>
+                            <button class="hitos-option btn-hist bg-stone-700 hover:bg-stone-600 border-stone-600 normal-case text-left pl-6" data-answer="Central Eléctrica">Central Eléctrica</button>
+                            <button class="hitos-option btn-hist bg-stone-700 hover:bg-stone-600 border-stone-600 normal-case text-left pl-6" data-answer="Minas de Asfalto">Minas de Asfalto</button>
+                            <button class="hitos-option btn-hist bg-stone-700 hover:bg-stone-600 border-stone-600 normal-case text-left pl-6" data-answer="Banco Local">Banco Local</button>
+                        </div>
+                        <button id="check-hitos" class="btn-hist w-full mt-8 bg-amber-700 border-amber-600">Verificar Datos</button>
+                        <p id="hitos-feedback" class="mt-4 text-center text-xl font-bold"></p>
+                    </div>
+                </div>
+
+                <!-- 3. LA TRAGEDIA -->
+                <div class="story-section flex flex-col justify-center" data-aos="fade-right">
+                    <div class="card-docu p-12 border-l-4 border-l-red-900" id="section-3">
+                        <h3 class="text-4xl font-bold text-red-900/80 mb-6" style="color: #9f1239;">La Sombra de la Tragedia</h3>
+                        <p>La riqueza no exime del dolor. Pedro y su esposa Guadalupe tuvieron tres hijos, pero la desgracia golpeó pronto.</p>
+                        <p class="mt-4">Tras la muerte de la pequeña Inés, <strong>Guadalupe falleció en 1901</strong>, consumida por la tristeza. Nuestra abuela Josefina quedó huérfana a los 7 años, enfrentándose a una infancia dura bajo la tutela de una madrastra.</p>
+                        <div class="mt-8 flex justify-end">
+                            <button class="text-amber-500 hover:text-amber-300 text-lg flex items-center transition btn-tts" onclick="speakText(this)">
+                                <i class="fas fa-volume-up mr-2"></i> Escuchar relato
+                                <div class="loader hidden ml-2"></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACTIVIDAD 3: Roles -->
+                <div class="story-section flex flex-col justify-center" data-aos="fade-left">
+                    <div class="card-docu p-12 bg-stone-800">
+                        <div class="flex items-center mb-6">
+                            <div class="p-3 bg-stone-700 rounded-full mr-4"><i class="fas fa-user-tag text-2xl text-stone-200"></i></div>
+                            <h3 class="text-3xl font-bold text-amber-100">Perfiles Históricos</h3>
+                        </div>
+                        <p class="mb-6">Asocia cada rasgo biográfico con su protagonista:</p>
+                        
+                        <div id="roles-container" class="grid grid-cols-2 gap-6 mb-8">
+                            <div class="drop-target flex flex-col" data-role="Angel">
+                                <span class="text-amber-500 font-serif font-bold mb-2">Dr. Ángel Guevara</span>
+                            </div>
+                            <div class="drop-target flex flex-col" data-role="Josefina">
+                                <span class="text-amber-500 font-serif font-bold mb-2">Josefina Jáuregui</span>
+                            </div>
+                        </div>
+
+                        <div id="roles-options" class="flex flex-wrap justify-center gap-4 p-4 bg-stone-900 rounded-lg">
+                            <div class="draggable-item text-amber-100" data-for="Angel">Médico Cazador</div>
+                            <div class="draggable-item text-amber-100" data-for="Josefina">Huérfana a los 7</div>
+                            <div class="draggable-item text-amber-100" data-for="Angel">Hijo único sobreviviente</div>
+                            <div class="draggable-item text-amber-100" data-for="Josefina">Nieta de 'El Regalao'</div>
+                        </div>
+                        
+                        <button id="check-roles" class="btn-hist w-full mt-6">Confirmar Identidades</button>
+                        <p id="roles-feedback" class="mt-4 text-center text-xl font-bold"></p>
+                    </div>
+                </div>
+
+                <!-- 4. LA BODA DE 1916 -->
+                <div class="story-section flex flex-col justify-center" data-aos="fade-up">
+                    <div class="card-docu p-12" id="section-4">
+                        <h3 class="text-4xl font-bold text-amber-400 mb-6">1916: Una Unión en Tiempos de Guerra</h3>
+                        <p>Ángel y Josefina unieron sus destinos el <strong>17 de noviembre de 1916</strong>. No fue en Vitoria, sino en la Basílica del <strong>Santo Cristo en Lezo</strong>.</p>
+                        <p class="mt-4">¿La razón? El Santuario de Estíbaliz estaba en obras y el hermano de Josefina, Pepe, cumplía el servicio militar en San Sebastián. Tras la boda, emprendieron un viaje de novios monumental: <strong>6.000 kilómetros en tren</strong>.</p>
+                        <div class="mt-8 flex justify-end">
+                            <button class="text-amber-500 hover:text-amber-300 text-lg flex items-center transition btn-tts" onclick="speakText(this)">
+                                <i class="fas fa-volume-up mr-2"></i> Escuchar relato
+                                <div class="loader hidden ml-2"></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACTIVIDAD 4: Secuencia -->
+                <div class="story-section flex flex-col justify-center" data-aos="fade-right">
+                    <div class="card-docu p-12 bg-stone-800">
+                        <div class="flex items-center mb-6">
+                            <div class="p-3 bg-blue-900 rounded-full mr-4"><i class="fas fa-list-ol text-2xl text-blue-200"></i></div>
+                            <h3 class="text-3xl font-bold text-amber-100">Ordena los Hechos</h3>
+                        </div>
+                        <p class="mb-6">Restablece el orden cronológico de los eventos nupciales:</p>
+                        
+                        <div id="sequence-quiz-container" class="space-y-4">
+                            <!-- Items to click/drag -->
+                            <div class="flex flex-col gap-3" id="draggable-sequence">
+                                <div class="sequence-item draggable-item text-amber-100 bg-stone-700 hover:bg-stone-600 cursor-pointer" data-order="2">
+                                    <i class="fas fa-church mr-2"></i> Boda en el Santo Cristo de Lezo
+                                </div>
+                                <div class="sequence-item draggable-item text-amber-100 bg-stone-700 hover:bg-stone-600 cursor-pointer" data-order="1">
+                                    <i class="fas fa-envelope mr-2"></i> Petición de mano por carta
+                                </div>
+                                <div class="sequence-item draggable-item text-amber-100 bg-stone-700 hover:bg-stone-600 cursor-pointer" data-order="3">
+                                    <i class="fas fa-train mr-2"></i> Viaje de 6.000 km en tren
+                                </div>
+                            </div>
+                            
+                            <!-- Targets -->
+                            <div id="drop-targets" class="grid grid-cols-1 gap-4 mt-6">
+                                <div class="drop-target border-stone-600" data-target="1"><span class="text-stone-500">1. Primero ocurrió...</span></div>
+                                <div class="drop-target border-stone-600" data-target="2"><span class="text-stone-500">2. Después...</span></div>
+                                <div class="drop-target border-stone-600" data-target="3"><span class="text-stone-500">3. Finalmente...</span></div>
+                            </div>
+                        </div>
+                        <button id="check-sequence" class="btn-hist w-full mt-6">Validar Cronología</button>
+                        <p id="sequence-feedback" class="mt-4 text-center text-xl font-bold"></p>
+                    </div>
+                </div>
+
+                <!-- 5. EL ÉXODO (1918) -->
+                <div class="story-section flex flex-col justify-center" data-aos="fade-left">
+                    <div class="card-docu p-12 border-l-4 border-l-stone-500" id="section-5">
+                        <h3 class="text-4xl font-bold text-amber-500 mb-6">1918: La Gran Pandemia y el Éxodo</h3>
+                        <p>La felicidad en Zalduendo fue efímera. En octubre de 1918, la llamada <strong>Gripe Española</strong> asoló el hogar. En una sola noche fallecieron el patriarca Telesforo y la sirvienta.</p>
+                        <p class="mt-4">El dolor impulsó a la familia a abandonar el pueblo y refugiarse en Vitoria. Años más tarde, en 1922, la falta de medicinas se cobró otra vida: la de Felipa, madre de Ángel.</p>
+                        <div class="mt-8 flex justify-end">
+                            <button class="text-amber-500 hover:text-amber-300 text-lg flex items-center transition btn-tts" onclick="speakText(this)">
+                                <i class="fas fa-volume-up mr-2"></i> Escuchar relato
+                                <div class="loader hidden ml-2"></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACTIVIDAD 5: Causa de Muerte -->
+                <div class="story-section flex flex-col justify-center" data-aos="fade-up">
+                    <div class="card-docu p-12 bg-stone-800">
+                        <div class="flex items-center mb-6">
+                            <div class="p-3 bg-red-900 rounded-full mr-4"><i class="fas fa-book-medical text-2xl text-red-200"></i></div>
+                            <h3 class="text-3xl font-bold text-amber-100">Causa Médica</h3>
+                        </div>
+                        <p class="mb-6">¿Cuál fue la causa exacta del fallecimiento de Felipa en 1922?</p>
+                        <div class="flex flex-col gap-4">
+                            <button class="felipa-option btn-hist bg-stone-700 normal-case text-left" data-correct="false">La Gripe Española (recurrente)</button>
+                            <button class="felipa-option btn-hist bg-stone-700 normal-case text-left" data-correct="true">Pulmonía por falta de medicación</button>
+                            <button class="felipa-option btn-hist bg-stone-700 normal-case text-left" data-correct="false">Gangrena diabética</button>
+                        </div>
+                        <p id="felipa-feedback" class="mt-4 text-center text-xl font-bold"></p>
+                    </div>
+                </div>
+
+                <!-- 6. ILÁRRAZA -->
+                <div class="story-section flex flex-col justify-center" data-aos="fade-up">
+                    <div class="card-docu p-12" id="section-6">
+                        <h3 class="text-4xl font-bold text-amber-400 mb-6">El Renacer en Ilárraza</h3>
+                        <p>Tras pasar por Junguitu, en <strong>1924</strong> la familia encuentra su paraíso. Construyen la "preciosa casa" de Ilárraza, donde nacería la benjamina, Finitxu.</p>
+                        <p class="mt-4">Allí crecieron José, Ángel, Estíbaliz, Luis María y Finitxu, hasta que en <strong>1955</strong> la familia se trasladó definitivamente a la calle Manuel Iradier 74 en Vitoria.</p>
+                        
+                        <!-- NUEVA ACTIVIDAD INTERACTIVA: ORDENAR NACIMIENTOS -->
+                        <div class="mt-12 bg-stone-900 p-8 rounded-xl border border-amber-600">
+                             <div class="flex items-center mb-6">
+                                <div class="p-3 bg-amber-700 rounded-full mr-4"><i class="fas fa-sort-numeric-up-alt text-2xl text-amber-100"></i></div>
+                                <h3 class="text-3xl font-bold text-amber-100">Desafío: Orden de Nacimiento</h3>
+                            </div>
+                            <p class="mb-6 text-stone-300">Arrastra los hijos a su posición cronológica correcta (del 1º al 5º):</p>
+                            
+                            <div id="birth-sequence-container">
+                                <div class="grid grid-cols-2 gap-3" id="draggable-birth">
+                                    <div class="birth-item draggable-item text-amber-100 bg-stone-700 hover:bg-stone-600 cursor-pointer" data-order="1">José (1917, Zalduendo)</div>
+                                    <div class="birth-item draggable-item text-amber-100 bg-stone-700 hover:bg-stone-600 cursor-pointer" data-order="3">Estíbaliz (1922, Junguitu)</div>
+                                    <div class="birth-item draggable-item text-amber-100 bg-stone-700 hover:bg-stone-600 cursor-pointer" data-order="2">Ángel (1920, Vitoria)</div>
+                                    <div class="birth-item draggable-item text-amber-100 bg-stone-700 hover:bg-stone-600 cursor-pointer" data-order="4">Luis María (1924, Junguitu)</div>
+                                    <div class="birth-item draggable-item text-amber-100 bg-stone-700 hover:bg-stone-600 cursor-pointer" data-order="5">Finitxu (1927, Ilárraza)</div>
+                                </div>
+                                <div id="birth-drop-targets" class="grid grid-cols-5 gap-2 mt-6">
+                                    <div class="drop-target border-stone-600" data-target="1"><span class="text-stone-500 text-sm">1º (1917)</span></div>
+                                    <div class="drop-target border-stone-600" data-target="2"><span class="text-stone-500 text-sm">2º (1920)</span></div>
+                                    <div class="drop-target border-stone-600" data-target="3"><span class="text-stone-500 text-sm">3º (1922)</span></div>
+                                    <div class="drop-target border-stone-600" data-target="4"><span class="text-stone-500 text-sm">4º (1924)</span></div>
+                                    <div class="drop-target border-stone-600" data-target="5"><span class="text-stone-500 text-sm">5º (1927)</span></div>
+                                </div>
+                            </div>
+                            <button id="check-birth-sequence" class="btn-hist w-full mt-6">Validar Secuencia</button>
+                            <p id="birth-sequence-feedback" class="mt-4 text-center text-xl font-bold"></p>
+                        </div>
+                        
+                        <div class="mt-8 flex justify-end">
+                            <button class="text-amber-500 hover:text-amber-300 text-lg flex items-center transition btn-tts" onclick="speakText(this)">
+                                <i class="fas fa-volume-up mr-2"></i> Escuchar relato
+                                <div class="loader hidden ml-2"></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
-        <!-- SECCIÓN JAUREGUI -->
-        <section id="jauregui" class="hidden space-y-12">
-            <div class="text-center mb-12" data-aos="fade-down">
-                <span class="text-old-gold font-bold tracking-widest uppercase">Maestu y Progreso</span>
-                <h2 class="font-serif text-5xl text-forest-green font-bold">El Linaje Jauregui</h2>
-            </div>
+        <!-- Simulator Section -->
+        <section id="simulator" class="min-h-screen p-8 md:p-16 flex flex-col justify-center bg-stone-900 border-t border-amber-900">
+            <h2 class="text-center mb-12 text-amber-500 italic">Simulador de Escenarios Históricos</h2>
+            <p class="text-xl text-center max-w-4xl mx-auto mb-10 text-stone-400">¿Cómo habría cambiado el destino de la familia si ciertos factores hubieran sido diferentes?</p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div class="order-2 md:order-1" data-aos="fade-right">
-                    <div class="card-pop p-8 rounded-lg bg-white cursor-pointer" onclick="openModal('pedro')">
-                        <div class="flex items-center justify-between mb-2">
-                             <h3 class="font-serif text-2xl font-bold text-burgundy">Pedro "El Regalao"</h3>
-                             <i class="fas fa-plus-circle text-old-gold"></i>
-                        </div>
-                        <p class="mb-4 text-justify text-sm text-gray-700">
-                            Secretario del Ayto de Maestu y administrador de confianza de Juan Arana. Gestionaba las <strong>Minas de Asfaltos de Leorza</strong>.
+            <div class="card-docu p-12 max-w-6xl mx-auto w-full grid md:grid-cols-3 gap-10 bg-stone-800">
+                <!-- Variables Control -->
+                <div class="col-span-1 space-y-10 border-r border-stone-700 pr-6">
+                    <div>
+                        <label class="text-lg font-serif font-bold block mb-3 text-amber-200">Acceso a Medicinas (1922)</label>
+                        <input type="range" id="medication-level" min="0" max="100" value="30" class="w-full">
+                        <p class="text-sm text-stone-500 mt-2">Nivel: <span id="medication-output">30%</span> (Realidad: Escaso)</p>
+                    </div>
+                    <div>
+                        <label class="text-lg font-serif font-bold block mb-3 text-amber-200">Patrimonio de Telesforo</label>
+                        <input type="range" id="estate-value" min="0" max="100" value="80" class="w-full">
+                        <p class="text-sm text-stone-500 mt-2">Nivel: <span id="estate-output">80%</span> (Realidad: Alto)</p>
+                    </div>
+                    <div>
+                        <label class="text-lg font-serif font-bold block mb-3 text-amber-200">Servicio Militar de Pepe</label>
+                        <select id="pepe-military" class="w-full p-3 rounded bg-stone-900 text-amber-100 border border-stone-600">
+                            <option value="true">Sí (En San Sebastián)</option>
+                            <option value="false">No (Exento)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Output -->
+                <div class="col-span-2 pl-4">
+                    <h3 class="text-2xl font-serif font-bold text-amber-100 mb-6 border-b border-stone-600 pb-2">Proyección Alternativa</h3>
+                    
+                    <div id="sim-explanation" class="mt-6 p-6 bg-stone-900 rounded border border-stone-700 min-h-[200px]">
+                        <p id="sim-narrative" class="text-lg leading-relaxed text-stone-300">
+                            Modifica las variables a la izquierda y ejecuta la simulación para ver cómo se reescribe la historia.
                         </p>
-                        <p class="text-xs text-gray-500 italic text-center border-t pt-2">Click para ver la historia completa</p>
-                    </div>
-                </div>
-
-                <div class="order-1 md:order-2 space-y-6" data-aos="fade-left">
-                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-burgundy">
-                        <h4 class="font-bold text-lg mb-2">Josefina Jauregui (1893)</h4>
-                        <p class="text-sm text-gray-600">Huérfana a los 7 años. No tuvo una infancia feliz con su madrastra. Encontró el amor en Vitoria, en la Plazuela de Los Guardias.</p>
                     </div>
                     
-                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-old-gold">
-                        <h4 class="font-bold text-lg mb-2">El "Papamoscas" de Maestu</h4>
-                        <p class="text-sm text-gray-600">Se cuenta que fue donado por un antepasado Jauregui a la iglesia. ¡El reloj tiene más de un siglo!</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN HISTORIA (AMOR) -->
-        <section id="love" class="hidden space-y-12">
-            <div class="max-w-4xl mx-auto">
-                 <div class="text-center mb-12" data-aos="fade-down">
-                    <h2 class="font-serif text-5xl text-forest-green font-bold">Historia de Amor (1916)</h2>
-                </div>
-
-                <div class="relative border-l-4 border-forest-green pl-8 ml-4 space-y-12">
-                    <!-- Petición -->
-                    <div class="relative group cursor-pointer" onclick="openModal('peticion')">
-                        <div class="absolute -left-12 top-0 w-8 h-8 bg-forest-green rounded-full border-4 border-white flex items-center justify-center text-white text-xs">1</div>
-                        <div class="card-pop p-6 rounded bg-white">
-                            <h3 class="font-bold text-xl mb-2">La Petición (Marzo 1916)</h3>
-                            <p class="text-sm text-gray-600">Cartas formales y viaje en automóvil a Maestu. La prensa lo anunció en "Ecos Regionales".</p>
-                            <span class="text-xs text-old-gold font-bold block mt-2">Leer la carta de Ángel &rarr;</span>
-                        </div>
-                    </div>
-
-                    <!-- Boda -->
-                    <div class="relative group cursor-pointer" onclick="openModal('boda')">
-                        <div class="absolute -left-12 top-0 w-8 h-8 bg-old-gold rounded-full border-4 border-white flex items-center justify-center text-white text-xs">2</div>
-                        <div class="card-pop p-6 rounded bg-white">
-                            <h3 class="font-bold text-xl mb-2">La Boda en Lezo (17 Nov 1916)</h3>
-                            <p class="text-sm text-gray-600">¿Por qué Lezo? Porque Estíbaliz estaba en obras y Pepe hacía la mili allí.</p>
-                            <p class="text-sm text-gray-600 mt-2"><strong>Ajuar de lujo:</strong> Ropa de "Fernando Vicente" y vestido de "Obdulia Echevarría".</p>
-                             <span class="text-xs text-old-gold font-bold block mt-2 clear-both">Ver detalles del ajuar &rarr;</span>
-                        </div>
-                    </div>
-
-                    <!-- Casa -->
-                    <div class="relative group">
-                        <div class="absolute -left-12 top-0 w-8 h-8 bg-burgundy rounded-full border-4 border-white flex items-center justify-center text-white text-xs">3</div>
-                        <div class="card-pop p-6 rounded bg-white">
-                            <h3 class="font-bold text-xl mb-2">La Casa de Ilárraza (1924)</h3>
-                            <p class="text-sm text-gray-600">Construida en 1924. Allí nació Finitxu. Un hogar marcado por la devoción a la Virgen de Estíbaliz.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN VIDA -->
-        <section id="life" class="hidden">
-            <div class="bg-white p-8 rounded-xl shadow-lg">
-                <h2 class="font-serif text-3xl font-bold text-forest-green mb-6 text-center">La Descendencia</h2>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <div class="text-center p-4 border rounded bg-gray-50 w-32 hover:shadow-md transition">
-                        <div class="w-16 h-16 bg-forest-green rounded-full mx-auto mb-2 flex items-center justify-center text-white">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h4 class="font-bold text-sm">José</h4>
-                        <span class="text-xs text-gray-500">1917</span>
-                    </div>
-                    <div class="text-center p-4 border rounded bg-gray-50 w-32 hover:shadow-md transition">
-                        <div class="w-16 h-16 bg-forest-green rounded-full mx-auto mb-2 flex items-center justify-center text-white">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h4 class="font-bold text-sm">Ángel</h4>
-                        <span class="text-xs text-gray-500">1920</span>
-                    </div>
-                    <div class="text-center p-4 border rounded bg-gray-50 w-32 hover:shadow-md transition">
-                        <div class="w-16 h-16 bg-forest-green rounded-full mx-auto mb-2 flex items-center justify-center text-white">
-                            <i class="fas fa-user-dress"></i>
-                        </div>
-                        <h4 class="font-bold text-sm">Estíbaliz</h4>
-                        <span class="text-xs text-gray-500">1922</span>
-                    </div>
-                    <div class="text-center p-4 border rounded bg-gray-50 w-32 hover:shadow-md transition">
-                        <div class="w-16 h-16 bg-forest-green rounded-full mx-auto mb-2 flex items-center justify-center text-white">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h4 class="font-bold text-sm">Luis Mª</h4>
-                        <span class="text-xs text-gray-500">1924</span>
-                    </div>
-                    <div class="text-center p-4 border rounded bg-gray-50 w-32 hover:shadow-md transition">
-                        <div class="w-16 h-16 bg-forest-green rounded-full mx-auto mb-2 flex items-center justify-center text-white">
-                            <i class="fas fa-user-dress"></i>
-                        </div>
-                        <h4 class="font-bold text-sm">Finitxu</h4>
-                        <span class="text-xs text-gray-500">1927</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN QUIZ -->
-        <section id="quiz" class="hidden">
-            <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden">
-                <div class="bg-forest-green p-6 text-white text-center">
-                    <h2 class="font-serif text-3xl font-bold">🎓 Quiz Guevara-Jauregui</h2>
-                    <p class="text-green-100 text-sm">20 preguntas para expertos. ¿Cuánto sabes?</p>
-                </div>
-                
-                <div id="quiz-container" class="p-8">
-                    <!-- Las preguntas se cargan aquí con JS -->
-                    <div id="question-box">
-                        <h3 id="q-text" class="text-xl font-bold mb-6 text-gray-800">Cargando pregunta...</h3>
-                        <div id="options" class="space-y-3"></div>
-                    </div>
-                    
-                    <div id="feedback" class="hidden mt-6 p-4 rounded bg-gray-100 border text-sm"></div>
-                    
-                    <button id="next-btn" onclick="nextQuestion()" class="hidden mt-6 bg-old-gold text-white px-6 py-2 rounded font-bold hover:bg-sepia-ink transition w-full">
-                        Siguiente Pregunta &rarr;
+                    <button onclick="runSimulation()" class="btn-hist w-full mt-8 text-xl py-4 bg-amber-700 border-amber-600">
+                        <i class="fas fa-cogs mr-2"></i> Generar Hipótesis
                     </button>
                 </div>
             </div>
         </section>
 
-    </main>
+        <!-- Quiz Section (Renamed) -->
+        <section id="trivia" class="min-h-screen p-8 md:p-16 flex flex-col justify-center bg-stone-950">
+            <h2 class="text-center mb-12 text-amber-400 italic">¡Demuestra cuánto sabes!</h2>
+            <p class="text-xl text-center max-w-4xl mx-auto mb-10 text-stone-400">¿Has prestado atención a los detalles de nuestra historia? Responde a estas preguntas.</p>
 
-    <!-- MODALES (Hidden by default) -->
-    <div id="modal-overlay" class="fixed inset-0 modal-overlay hidden z-[100] flex items-center justify-center p-4" onclick="closeModal()">
-        <div class="bg-white rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative" onclick="event.stopPropagation()">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-red-500 text-2xl">&times;</button>
-            <div id="modal-content" class="p-8">
-                <!-- Contenido dinámico -->
+            <div class="card-docu p-12 max-w-4xl mx-auto w-full bg-stone-900">
+                <div id="quiz-container" class="space-y-12">
+                    <!-- Dynamic Questions -->
+                </div>
+                
+                <div class="mt-16 pt-8 border-t border-stone-700 flex flex-col items-center">
+                    <button id="submit-quiz" class="btn-hist text-xl px-10 py-4 w-full md:w-auto bg-green-800 border-green-700 hover:bg-green-700">
+                        <i class="fas fa-award mr-2"></i> Ver Resultados
+                    </button>
+                    <button id="reset-quiz" class="btn-hist bg-stone-700 text-stone-300 border-stone-600 mt-4 hidden">
+                        <i class="fas fa-undo mr-2"></i> Intentar de nuevo
+                    </button>
+                </div>
+                
+                <div id="quiz-results" class="mt-8 text-center hidden">
+                    <h3 class="text-5xl font-serif font-bold text-amber-400 mb-4"><span id="final-score">0/15</span></h3>
+                    <p id="quiz-message" class="text-2xl text-stone-300"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Local Chat Widget -->
+        <div id="chat-widget" class="fixed bottom-6 right-6 z-50">
+            <button id="chat-toggle" class="w-14 h-14 rounded-full bg-amber-700 text-white shadow-lg hover:bg-amber-600 transition flex items-center justify-center text-2xl">
+                <i class="fas fa-info"></i>
+            </button>
+            <div id="chat-window" class="hidden absolute bottom-20 right-0 w-80 bg-stone-800 border border-amber-700 rounded-lg p-4 shadow-2xl">
+                <h4 class="text-lg font-bold mb-3 text-amber-400 border-b border-stone-600 pb-2">Guía Rápida</h4>
+                <div class="space-y-2">
+                    <button class="chat-option w-full text-left p-2 hover:bg-stone-700 rounded text-stone-300 text-sm" data-topic="Telesforo">Sobre Telesforo</button>
+                    <button class="chat-option w-full text-left p-2 hover:bg-stone-700 rounded text-stone-300 text-sm" data-topic="ElRegalao">Sobre 'El Regalao'</button>
+                    <button class="chat-option w-full text-left p-2 hover:bg-stone-700 rounded text-stone-300 text-sm" data-topic="Lezo">La Boda en Lezo</button>
+                    <button class="chat-option w-full text-left p-2 hover:bg-stone-700 rounded text-amber-400 text-sm" data-topic="Analogia">Analogía Histórica (Local)</button>
+                </div>
+                <div id="chat-content" class="mt-4 p-3 bg-stone-900 rounded text-sm text-stone-400 italic">
+                    Selecciona un tema para obtener una explicación.
+                </div>
             </div>
         </div>
-    </div>
+        
+    </main>
 
-    <!-- Scripts -->
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000;"></canvas>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
     <script>
-        AOS.init({ duration: 800, once: true });
-
-        // --- DATOS PARA MODALES ---
-        const details = {
-            'telesforo': {
-                title: 'Telesforo Guevara (1838-1918)',
-                html: `
-                    <div class="flex gap-4 mb-4">
-                        <div class="w-full">
-                            <p class="font-bold text-forest-green text-lg">El Confitero Emprendedor</p>
-                            <p class="text-sm mt-2">Nacido en Junguitu. Se mudó a Vitoria y estableció su negocio. En los documentos consta como "Confitero".</p>
-                        </div>
-                    </div>
-                    <h4 class="font-bold border-b border-old-gold mb-2">Propiedades Adquiridas:</h4>
-                    <ul class="list-disc pl-5 text-sm space-y-1 mb-4">
-                        <li><strong>1880:</strong> Casa en C/Barreras nº11 (73 m²) por <strong>10.750 Ptas</strong>.</li>
-                        <li><strong>1899:</strong> Casa en C/Francia nº5 (151 m² con patio) por <strong>11.500 Ptas</strong>.</li>
-                        <li>Fincas rústicas en Matauco, Arbulo y Argandoña valoradas en 4.525 Ptas.</li>
-                    </ul>
-                    <p class="text-sm bg-red-50 p-2 rounded border border-red-200">
-                        <strong class="text-red-800">El triste final:</strong> Falleció en octubre de 1918 en Zalduendo víctima de la epidemia de gripe ("Gripe Española"), junto con la sirvienta de la casa.
-                    </p>`
-            },
-            'angel': {
-                title: 'Ángel Guevara Ajuria (1887-1965)',
-                html: `
-                    <p class="mb-4">Nacido en Vitoria el 2 de agosto de 1887. Fue el único superviviente de 8 hermanos, lo que hizo que sus padres lo protegieran y mimaran mucho.</p>
-                    <ul class="list-disc pl-5 text-sm mb-4">
-                        <li><strong>Carácter:</strong> Muy tímido. Un cura amigo de la familia se encargaba de su educación y disciplina.</li>
-                        <li><strong>Profesión:</strong> Licenciado en Medicina en Valladolid (1913). Obtuvo plaza en Zalduendo ese mismo año.</li>
-                        <li><strong>Pasión:</strong> Su gran afición era la caza.</li>
-                    </ul>
-                    <p class="text-sm italic">Vivió el trauma de la muerte de su padre en 1918, lo que le llevó a abandonar Zalduendo temporalmente.</p>`
-            },
-            'pedro': {
-                title: 'Pedro Valentín Jauregui "El Regalao" (1851-1930)',
-                html: `
-                    <p class="mb-4">Una de las figuras más influyentes de la Montaña Alavesa. Su apodo "El Regalao" venía, según dicen, de que vivía cómodamente de las rentas.</p>
-                    <h4 class="font-bold text-forest-green mb-2">Hombre de Negocios:</h4>
-                    <p class="text-sm mb-3">Fue la mano derecha de <strong>Juan Arana</strong>. Administró:</p>
-                    <ul class="list-disc pl-5 text-sm mb-4">
-                        <li>La <strong>Sociedad de Asfaltos de Leorza</strong>.</li>
-                        <li>La primera <strong>Central Eléctrica</strong> de Maestu (trajo la luz al pueblo).</li>
-                    </ul>
-                    <p class="text-sm">Fue Secretario del Ayuntamiento y Diputado Provincial.</p>`
-            },
-            'peticion': {
-                title: 'La Petición de Mano (1916)',
-                html: `
-                    <p class="mb-4">En marzo de 1916, Ángel escribió una carta formal a Pedro Jauregui pidiendo la mano de Josefina.</p>
-                    <div class="bg-gray-100 p-4 rounded italic text-sm font-serif border-l-4 border-forest-green mb-4">
-                        "Tengo la satisfacción de manifestarle que enterado de las relaciones que tiene V. con su hija Josefina... tengo la satisfacción de ofrecerme..."
-                    </div>
-                    <p class="text-sm">La noticia fue tan sonada que salió en la prensa local ("Ecos Regionales" y "Heraldo Alavés"). Ángel acudió a Maestu en <strong>automóvil</strong> acompañado de su madre y su tío.</p>`
-            },
-            'boda': {
-                title: 'La Boda (17 Noviembre 1916)',
-                html: `
-                    <p class="mb-4 font-bold text-center text-lg">Basílica del Santo Cristo de Lezo (Guipúzcoa)</p>
-                    <p class="text-sm mb-4"><strong>¿Por qué en Lezo?</strong> El Santuario de Estíbaliz estaba en obras, y Pepe (hermano de la novia) estaba haciendo el servicio militar en San Sebastián, así que buscaron un punto cercano para él.</p>
-                    <h4 class="font-bold text-old-gold border-b mb-2">El Ajuar de Lujo:</h4>
-                    <ul class="text-sm space-y-2">
-                        <li><strong>Ropa Blanca:</strong> Comprada en "Fernando Vicente" (Vitoria).</li>
-                        <li><strong>Vestido de Novia:</strong> Confeccionado por la modista <strong>Obdulia Echevarría</strong> ("Un vestido blanco de ceremonia y velo").</li>
-                        <li><strong>Luna de Miel:</strong> Compraron un "Billete Kilométrico" de 1ª Clase para recorrer 6.000 km en tren.</li>
-                    </ul>`
-            }
-        };
-
-        function openModal(id) {
-            const data = details[id];
-            if(!data) return;
-            document.getElementById('modal-content').innerHTML = `
-                <h2 class="text-3xl font-serif font-bold text-forest-green mb-4">${data.title}</h2>
-                <div class="text-gray-700 leading-relaxed">${data.html}</div>
-            `;
-            document.getElementById('modal-overlay').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('modal-overlay').classList.add('hidden');
-        }
-
-        // --- QUIZ LOGIC (20 QUESTIONS) ---
-        const questions = [
-            {
-                q: "¿Por qué se casaron en Lezo y no en Estíbaliz?",
-                a: ["Porque les gustaba el mar", "Por obras en Estíbaliz y la mili del hermano", "Porque era más barato"],
-                correct: 1,
-                info: "¡Correcto! El Santuario de Estíbaliz estaba en obras y Pepe, el hermano de Josefina, hacía la mili en San Sebastián."
-            },
-            {
-                q: "¿Qué trágico evento ocurrió el 10 de octubre de 1918?",
-                a: ["Se incendió la casa", "Murió Telesforo por la epidemia de gripe", "Nació Ángel"],
-                correct: 1,
-                info: "Exacto. La 'Gripe Española' se llevó al abuelo Telesforo y a la sirvienta en una sola noche."
-            },
-            {
-                q: "¿Qué apodo tenía Pedro Jauregui?",
-                a: ["El Médico", "El Confitero", "El Regalao"],
-                correct: 2,
-                info: "Correcto. Le llamaban 'El Regalao' posiblemente porque vivía bien de las rentas y sus negocios."
-            },
-            {
-                q: "¿Qué profesión tenía Telesforo Guevara?",
-                a: ["Médico", "Confitero", "Minero"],
-                correct: 1,
-                info: "Así es. En las escrituras de compra de sus casas figura como 'Confitero, vecino de Vitoria'."
-            },
-            {
-                q: "¿En qué año se construyó la casa de Ilárraza?",
-                a: ["1916", "1924", "1930"],
-                correct: 1,
-                info: "Correcto. Compraron el terreno en octubre de 1924 y empezaron a construir en noviembre del mismo año."
-            },
-            {
-                q: "¿Dónde estudió medicina Ángel Guevara?",
-                a: ["Salamanca", "Bilbao", "Valladolid"],
-                correct: 2,
-                info: "Correcto. Obtuvo su licenciatura en la Facultad de Medicina de Valladolid en 1913."
-            },
-            {
-                q: "¿Cuál era la gran afición de Ángel Guevara?",
-                a: ["El fútbol", "La caza", "La pintura"],
-                correct: 1,
-                info: "Efectivamente, su gran pasión era la caza."
-            },
-            {
-                q: "¿Quién se encargaba de poner límites al tímido Ángel en su educación?",
-                a: ["Su padre Telesforo", "Un cura amigo de la familia", "Su madre Felipa"],
-                correct: 1,
-                info: "Correcto. Sus padres lo mimaban mucho, así que contaban con un cura amigo para su educación."
-            },
-            {
-                q: "¿Dónde vivía Josefina Jauregui con sus abuelos maternos?",
-                a: ["Calle Francia", "Plazuela de los Guardias", "Maestu"],
-                correct: 1,
-                info: "Correcto. Allí pasaba temporadas y conoció a Ángel."
-            },
-            {
-                q: "¿Cuánto costó la casa de C/Barreras nº11 en 1880?",
-                a: ["5.000 Ptas", "10.750 Ptas", "20.000 Ptas"],
-                correct: 1,
-                info: "¡Exacto! Según las escrituras, Telesforo pagó 10.750 pesetas."
-            },
-            {
-                q: "¿Quién fue el hijo primogénito de Ángel y Josefina?",
-                a: ["José", "Luis María", "Finitxu"],
-                correct: 0,
-                info: "Correcto. José nació en 1917 en Zalduendo."
-            },
-            {
-                q: "¿Qué hija nació ya en la casa de Ilárraza en 1927?",
-                a: ["Estíbaliz", "Finitxu", "Josefina"],
-                correct: 1,
-                info: "Correcto. Finitxu nació en Ilárraza el 11 de noviembre de 1927."
-            },
-            {
-                q: "¿Quién falleció en 1901 causando gran tristeza a Pedro Jauregui?",
-                a: ["Su hija Inés", "Su esposa Guadalupe", "Su madre"],
-                correct: 1,
-                info: "Correcto. Guadalupe murió de pena poco después de perder a su hija Inés."
-            },
-            {
-                q: "¿Qué tipo de minas gestionaba Pedro Jauregui en Leorza?",
-                a: ["Carbón", "Hierro", "Asfaltos"],
-                correct: 2,
-                info: "Así es. Era administrador de la Sociedad de Asfaltos de Leorza."
-            },
-            {
-                q: "¿En qué medio de transporte fue Ángel a pedir la mano de Josefina?",
-                a: ["A caballo", "En tren", "En automóvil"],
-                correct: 2,
-                info: "Correcto. Llegaron en un automóvil junto con su madre y su tío."
-            },
-            {
-                q: "¿Quién confeccionó el vestido de novia de Josefina?",
-                a: ["Fernando Vicente", "Obdulia Echevarría", "Modas París"],
-                correct: 1,
-                info: "Correcto. La modista fue Obdulia Echevarría."
-            },
-            {
-                q: "¿De cuántos kilómetros era el billete de tren de su viaje de novios?",
-                a: ["1.000 km", "3.000 km", "6.000 km"],
-                correct: 2,
-                info: "¡Increíble pero cierto! Un billete kilométrico de 6.000 km."
-            },
-            {
-                q: "¿En qué año se instalaron los monjes benedictinos en Estíbaliz?",
-                a: ["1916", "1923", "1930"],
-                correct: 1,
-                info: "Correcto. Llegaron en 1923, y Ángel fue su médico."
-            },
-            {
-                q: "¿En qué pueblo falleció Telesforo Guevara?",
-                a: ["Vitoria", "Junguitu", "Zalduendo"],
-                correct: 2,
-                info: "Correcto. Murió en la casa familiar de Zalduendo durante la gripe."
-            },
-            {
-                q: "¿Cuál era la relación de Pedro Jauregui con Juan Arana?",
-                a: ["Eran rivales", "Pedro era su hombre de confianza", "Eran primos"],
-                correct: 1,
-                info: "Correcto. Pedro era su administrador y mano derecha en los negocios."
-            }
+        // --- DATA ---
+        const QUIZ_QUESTIONS = [
+            { q: "¿En qué año aparece el dato más antiguo del linaje Guevara?", a: "1826", options: ["1843", "1826", "1887", "1916"] },
+            { q: "¿Cuál era el oficio de Telesforo Guevara?", a: "Confitero", options: ["Médico", "Notario", "Confitero", "Diputado"] },
+            { q: "¿Cuánto pagó Telesforo por la casa de C/Barreras?", a: "10.750 Ptas.", options: ["7.300 Ptas.", "11.500 Ptas.", "10.750 Ptas.", "4.525 Ptas."] },
+            { q: "¿Cómo apodaban a Pedro Jáuregui?", a: "El Regalao", options: ["El Cazador", "El Regalao", "El Confitero", "El Escribano"] },
+            { q: "¿Por qué falleció Guadalupe Zumalde en 1901?", a: "Tristeza por la pérdida de su hija", options: ["Gripe Española", "Pulmonía", "Tristeza por la pérdida de su hija", "Accidente"] },
+            { q: "¿Qué fundó Pedro Jáuregui en Maestu?", a: "Minas de Asfalto y Central Eléctrica", options: ["Molino de Harinas", "Minas de Asfalto y Central Eléctrica", "Fábrica de Chocolates", "Tranvía"] },
+            { q: "¿Dónde se casaron Ángel y Josefina?", a: "Basílica del Santo Cristo en Lezo", options: ["Estíbaliz", "San Vicente", "Basílica del Santo Cristo en Lezo", "Junguitu"] },
+            { q: "¿Por qué la boda fue en Lezo?", a: "Estíbaliz estaba en obras", options: ["Pepe vivía allí", "Estíbaliz estaba en obras", "Era tradición", "Por cercanía"] },
+            { q: "¿Distancia del viaje de novios?", a: "6.000 km", options: ["3.000 km", "600 km", "1.500 km", "6.000 km"] },
+            { q: "¿Quiénes murieron en Zalduendo en 1918?", a: "Telesforo y la sirvienta", options: ["Felipa", "Telesforo y la sirvienta", "José", "Pepe"] },
+            { q: "¿Causa de muerte de Felipa Ajuria?", a: "Falta de medicación", options: ["Gripe", "Vejez", "Gangrena", "Falta de medicación"] },
+            { q: "¿Quién nació en la casa de Ilárraza?", a: "Finitxu", options: ["Estíbaliz", "Luis María", "Finitxu", "Ángel"] },
+            { q: "¿Año de la mudanza final a Manuel Iradier?", a: "1955", options: ["1927", "1930", "1955", "1965"] },
+            { q: "¿Quién de los hijos nació en Vitoria?", a: "Ángel", options: ["José", "Estíbaliz", "Ángel", "Luis María"] },
+            { q: "¿Quién era Obdulia Echevarría?", a: "La Modista", options: ["La Modista", "La prima", "La madre", "La sirvienta"] }
         ];
 
-        let currentQ = 0;
+        const CHAT_CONTENT_LOCAL = {
+            Telesforo: "Confitero próspero (1843-1918). Compró propiedades en C/Barreras y C/Francia. Falleció durante la pandemia de 1918.",
+            ElRegalao: "Pedro Jáuregui (1851-1930). Político e industrial de Maestu. Trajo la luz eléctrica y explotó las minas de asfalto.",
+            Lezo: "Lugar de la boda en 1916. Elegido porque Estíbaliz estaba en obras y el hermano de la novia hacía la mili cerca.",
+            Analogia: "La posición de 'El Regalao' era como ser dueño de una gran corporación de tecnología e inmobiliaria en los años 2000. La tragedia de la Gripe y la falta de medicinas es como una pandemia global donde el tratamiento vital está agotado. El impacto emocional y económico era devastador e incontrolable."
+        };
 
-        function loadQuiz() {
-            const qData = questions[currentQ];
-            document.getElementById('q-text').innerText = `${currentQ + 1}. ${qData.q}`;
-            const optsDiv = document.getElementById('options');
-            optsDiv.innerHTML = '';
+        // --- INIT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({ duration: 1200, once: true });
+            gsap.registerPlugin(ScrollTrigger, Draggable);
             
-            qData.a.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.className = "w-full text-left p-3 rounded border hover:bg-gray-50 transition";
-                btn.innerText = opt;
-                btn.onclick = () => checkAnswer(idx, btn);
-                optsDiv.appendChild(btn);
+            initAnimations();
+            initPriceActivity();
+            initHitosActivity();
+            initRolesActivity();
+            initSequenceActivity();
+            initFelipaActivity();
+            initSimulator();
+            initQuiz();
+            initChat();
+            initBirthSequenceActivity(); // Initialize the new activity
+            
+            // Check for TTS support on load
+            if (!('speechSynthesis' in window)) {
+                console.warn("Web Speech API no soportada. La función de 'Escuchar relato' no funcionará.");
+            }
+        });
+
+        // --- CORE LOGIC (STATIC) ---
+
+        // TTS using native Web Speech API (Local Only)
+        function speakText(button) {
+            if (!('speechSynthesis' in window)) {
+                alert("La función de lectura en voz alta no está disponible en este navegador.");
+                return;
+            }
+
+            const textContainer = button.closest('.card-docu');
+            if (!textContainer) return;
+            
+            let textToSpeak = '';
+            textContainer.querySelectorAll('h3, h4, p').forEach(el => {
+                // Clean up interactive button text from narrative
+                let text = el.textContent.replace(/Escuchar relato/g, '').trim();
+                textToSpeak += text + '. ';
             });
             
-            document.getElementById('feedback').classList.add('hidden');
-            document.getElementById('next-btn').classList.add('hidden');
-        }
-
-        function checkAnswer(selected, btn) {
-            const qData = questions[currentQ];
-            const feedback = document.getElementById('feedback');
-            
-            // Disable all buttons
-            const allBtns = document.getElementById('options').children;
-            for(let b of allBtns) b.disabled = true;
-
-            if(selected === qData.correct) {
-                btn.classList.add('bg-green-100', 'border-green-500');
-                feedback.innerHTML = `<span class="text-green-700 font-bold">✅ ¡Correcto!</span> <br> ${qData.info}`;
-            } else {
-                btn.classList.add('bg-red-100', 'border-red-500');
-                feedback.innerHTML = `<span class="text-red-700 font-bold">❌ Incorrecto.</span> <br> La respuesta correcta era: <strong>${qData.a[qData.correct]}</strong>. <br> ${qData.info}`;
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
             }
-            feedback.classList.remove('hidden');
-            
-            if(currentQ < questions.length - 1) {
-                document.getElementById('next-btn').classList.remove('hidden');
-                document.getElementById('next-btn').innerText = "Siguiente Pregunta →";
-                document.getElementById('next-btn').onclick = nextQuestion;
-            } else {
-                document.getElementById('next-btn').innerText = "¡Fin del Quiz!";
-                document.getElementById('next-btn').classList.remove('hidden');
-                document.getElementById('next-btn').onclick = () => alert('¡Enhorabuena! Has completado las 20 preguntas.');
-            }
-        }
 
-        function nextQuestion() {
-            currentQ++;
-            loadQuiz();
-        }
-
-        // Init Quiz
-        loadQuiz();
-
-        // Navigation
-        function showSection(id) {
-            ['home', 'guevara', 'jauregui', 'love', 'life', 'quiz'].forEach(s => {
-                const el = document.getElementById(s);
-                if(el) el.classList.add('hidden');
-            });
-            const target = document.getElementById(id);
-            if(target) {
-                target.classList.remove('hidden');
-                // Si es la sección home, aseguramos que se vea la animación
-                if (id === 'home') target.classList.add('animate-fade-in');
-            }
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            document.getElementById('mobile-menu').classList.add('hidden');
+            const utterance = new SpeechSynthesisUtterance(textToSpeak);
+            utterance.lang = 'es-ES';
+            utterance.rate = 0.9;
+            speechSynthesis.speak(utterance);
         }
         
-        function toggleMobileMenu() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
+        // --- ANIMATIONS ---
+        function initAnimations() {
+            // Smooth reveal for story sections
+            document.querySelectorAll('.story-section').forEach(section => {
+                gsap.to(section, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.2,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 75%",
+                        toggleActions: "play none none reverse"
+                    }
+                });
+            });
+        }
+
+        // --- ACTIVITY 1: PRICE SLIDER (FIXED) ---
+        function initPriceActivity() {
+            const slider = document.getElementById('price-slider');
+            const output = document.getElementById('price-value');
+            const btn = document.getElementById('check-price');
+            const feedback = document.getElementById('price-feedback');
+            const target = 10750;
+
+            slider.addEventListener('input', (e) => {
+                output.innerText = e.target.value;
+            });
+
+            btn.addEventListener('click', () => {
+                const val = parseInt(slider.value);
+                const diff = Math.abs(val - target);
+                
+                // Tolerance: within 100 ptas
+                if(diff <= 100) { 
+                    feedback.className = "mt-6 text-center text-xl font-bold text-green-400";
+                    feedback.innerHTML = `<i class="fas fa-check-circle"></i> ¡Exacto! 10.750 Ptas.`;
+                    showConfetti(btn);
+                    btn.disabled = true;
+                } else if (diff <= 1000) {
+                    feedback.className = "mt-6 text-center text-xl font-bold text-amber-400";
+                    feedback.innerText = `Estás cerca (${target} Ptas)... Ajusta un poco más.`;
+                } else {
+                    feedback.className = "mt-6 text-center text-xl font-bold text-red-400";
+                    feedback.innerText = `Lejos. El precio real fue ${target} Ptas.`;
+                }
+            });
+        }
+
+        // --- ACTIVITY 2: HITOS ---
+        function initHitosActivity() {
+            const btns = document.querySelectorAll('.hitos-option');
+            const check = document.getElementById('check-hitos');
+            const feedback = document.getElementById('hitos-feedback');
+            const correct = ["Central Eléctrica", "Minas de Asfalto"];
+            
+            btns.forEach(btn => {
+                btn.onclick = () => {
+                    if(btn.classList.contains('bg-amber-600')) {
+                        btn.classList.remove('bg-amber-600', 'text-white', 'border-amber-400');
+                        btn.classList.add('bg-stone-700', 'border-stone-600');
+                    } else {
+                        btn.classList.add('bg-amber-600', 'text-white', 'border-amber-400');
+                        btn.classList.remove('bg-stone-700', 'border-stone-600');
+                    }
+                };
+            });
+
+            check.onclick = () => {
+                const selected = Array.from(document.querySelectorAll('.hitos-option.bg-amber-600')).map(b => b.dataset.answer);
+                const isMatch = selected.length === 2 && selected.every(s => correct.includes(s));
+                
+                if(isMatch) {
+                    feedback.innerHTML = `<span class="text-green-400">¡Correcto! Pedro trajo la modernidad.</span>`;
+                    showConfetti(check);
+                    check.disabled = true;
+                } else {
+                    feedback.innerHTML = `<span class="text-red-400">Selecciona solo las dos industrias fundadas por él.</span>`;
+                }
+            };
+        }
+
+        // --- ACTIVITY 3: ROLES ---
+        function initRolesActivity() {
+            const items = document.querySelectorAll('#roles-options .draggable-item');
+            const targets = document.querySelectorAll('#roles-container .drop-target');
+            const check = document.getElementById('check-roles');
+            
+            items.forEach(item => {
+                item.onclick = () => {
+                    if(item.parentElement.classList.contains('drop-target')) {
+                        // Return to pool
+                        document.getElementById('roles-options').appendChild(item);
+                        item.classList.remove('bg-amber-700');
+                    } else {
+                        // Move to first empty target or swap
+                        for(let t of targets) {
+                            if(t.children.length < 3) { // 1 span title + max 2 items
+                                t.appendChild(item);
+                                item.classList.add('bg-amber-700');
+                                break;
+                            }
+                        }
+                    }
+                };
+            });
+
+            check.onclick = () => {
+                let score = 0;
+                document.querySelectorAll('#roles-container .draggable-item').forEach(item => {
+                    if(item.parentElement.dataset.role === item.dataset.for) score++;
+                });
+                
+                const feedback = document.getElementById('roles-feedback');
+                if(score === 4) {
+                    feedback.innerHTML = `<span class="text-green-400">¡Identidades Correctas!</span>`;
+                    showConfetti(check);
+                } else {
+                    feedback.innerHTML = `<span class="text-amber-400">Algunos datos no coinciden. Revisa.</span>`;
+                }
+            };
+        }
+
+        // --- ACTIVITY 4: SEQUENCE ---
+        function initSequenceActivity() {
+            const items = document.querySelectorAll('#draggable-sequence .sequence-item');
+            const targets = document.querySelectorAll('#drop-targets .drop-target');
+            const check = document.getElementById('check-sequence');
+
+            items.forEach(item => {
+                item.onclick = () => {
+                    if(item.parentElement.classList.contains('drop-target')) {
+                        document.getElementById('draggable-sequence').appendChild(item);
+                        item.classList.remove('bg-blue-800');
+                    } else {
+                        for(let t of targets) {
+                            if(t.children.length === 1) { // Only title span exists
+                                t.appendChild(item);
+                                item.classList.add('bg-blue-800');
+                                break;
+                            }
+                        }
+                    }
+                };
+            });
+
+            check.onclick = () => {
+                let correct = 0;
+                targets.forEach(t => {
+                    const item = t.querySelector('.sequence-item');
+                    if(item && item.dataset.order === t.dataset.target) correct++;
+                });
+
+                const fb = document.getElementById('sequence-feedback');
+                if(correct === 3) {
+                    fb.innerHTML = `<span class="text-green-400">¡Cronología Exacta!</span>`;
+                    showConfetti(check);
+                } else {
+                    fb.innerHTML = `<span class="text-amber-400">El orden no es correcto.</span>`;
+                }
+            }
+        }
+        
+        // --- NEW ACTIVITY 6: BIRTH SEQUENCE ---
+        function initBirthSequenceActivity() {
+            const items = document.querySelectorAll('#draggable-birth .birth-item');
+            const targets = document.querySelectorAll('#birth-drop-targets .drop-target');
+            const check = document.getElementById('check-birth-sequence');
+
+            // Set up click/move logic
+            items.forEach(item => {
+                item.onclick = () => {
+                    if(item.parentElement.classList.contains('drop-target')) {
+                        // Return item to source pool
+                        document.getElementById('draggable-birth').appendChild(item);
+                        item.classList.remove('bg-green-700', 'bg-red-700', 'border-amber-400');
+                    } else {
+                        // Move to first empty target
+                        for(let t of targets) {
+                            // Check if only the span is inside (meaning it's empty)
+                            if(t.children.length === 1 && t.children[0].tagName === 'SPAN') { 
+                                t.appendChild(item);
+                                item.classList.add('bg-green-700');
+                                break;
+                            }
+                        }
+                    }
+                };
+            });
+
+            check.onclick = () => {
+                let correct = 0;
+                let answered = 0;
+                targets.forEach(t => {
+                    const item = t.querySelector('.birth-item');
+                    if (item) {
+                        answered++;
+                        const expectedOrder = t.dataset.target;
+                        if (item.dataset.order === expectedOrder) {
+                            correct++;
+                            item.classList.remove('bg-green-700', 'bg-red-700');
+                            item.classList.add('bg-green-900', 'border-green-400');
+                        } else {
+                            item.classList.remove('bg-green-700');
+                            item.classList.add('bg-red-700', 'border-red-400');
+                        }
+                    }
+                });
+
+                const feedback = document.getElementById('birth-sequence-feedback');
+                if(correct === 5) {
+                    feedback.innerHTML = `<span class="text-green-400">¡Cronología Familiar Perfecta! (José 17, Ángel 20, Estíbaliz 22, Luis María 24, Finitxu 27)</span>`;
+                    showConfetti(check);
+                    check.disabled = true;
+                } else {
+                    feedback.innerHTML = `<span class="text-red-400">Fallo en ${5 - correct} posiciones. Revisa los años y el orden.</span>`;
+                }
+            };
+        }
+        
+        // --- ACTIVITY 5: FELIPA ---
+        function initFelipaActivity() {
+            const opts = document.querySelectorAll('.felipa-option');
+            const fb = document.getElementById('felipa-feedback');
+
+            opts.forEach(opt => {
+                opt.onclick = () => {
+                    opts.forEach(o => o.classList.remove('bg-amber-600', 'border-amber-400'));
+                    opt.classList.add('bg-amber-600', 'border-amber-400');
+                    
+                    if(opt.dataset.correct === "true") {
+                        fb.innerHTML = `<span class="text-green-400">Correcto. Una tragedia evitable hoy día.</span>`;
+                        showConfetti(opt);
+                    } else {
+                        fb.innerHTML = `<span class="text-red-400">Incorrecto.</span>`;
+                    }
+                }
+            });
+        }
+
+        // --- SIMULATOR ---
+        function initSimulator() {
+            ['medication-level', 'estate-value', 'pepe-military'].forEach(id => {
+                document.getElementById(id).addEventListener('input', updateSimUI);
+            });
+        }
+        
+        function updateSimUI() {
+            document.getElementById('medication-output').innerText = document.getElementById('medication-level').value + '%';
+            document.getElementById('estate-output').innerText = document.getElementById('estate-value').value + '%';
+        }
+
+        function runSimulation() {
+            const med = parseInt(document.getElementById('medication-level').value);
+            const estate = parseInt(document.getElementById('estate-value').value);
+            const pepe = document.getElementById('pepe-military').value === 'true';
+
+            let text = "";
+            
+            // Medication logic
+            if(med > 60) text += "<strong class='text-green-400'>Salud:</strong> Felipa habría sobrevivido a la neumonía gracias a los antibióticos, cambiando la dinámica familiar de los años 20.<br><br>";
+            else text += "<strong class='text-red-400'>Salud:</strong> La falta de medicinas condena a Felipa, tal como ocurrió en la realidad.<br><br>";
+
+            // Estate logic
+            if(estate < 40) text += "<strong class='text-red-400'>Economía:</strong> Sin el patrimonio de Telesforo, la construcción de la casa de Ilárraza habría sido imposible.<br><br>";
+            else text += "<strong class='text-green-400'>Economía:</strong> La solvencia económica permite la estabilidad y la construcción de Ilárraza.<br><br>";
+
+            // Pepe logic
+            if(!pepe) text += "<strong class='text-amber-400'>Evento:</strong> Sin Pepe en la mili, la boda probablemente se habría celebrado en Vitoria o Estíbaliz.";
+            else text += "<strong class='text-green-400'>Evento:</strong> La mili de Pepe confirma la boda en Lezo.";
+
+            document.getElementById('sim-narrative').innerHTML = text;
+        }
+
+        // --- QUIZ ---
+        function initQuiz() {
+            const container = document.getElementById('quiz-container');
+            QUIZ_QUESTIONS.forEach((q, i) => {
+                const div = document.createElement('div');
+                div.className = "pb-8 border-b border-stone-800 last:border-0";
+                div.innerHTML = `
+                    <p class="text-xl font-bold mb-4 text-amber-100">${i+1}. ${q.q}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        ${q.options.map(opt => `
+                            <button class="quiz-opt btn-hist bg-stone-800 border-stone-700 normal-case text-left pl-4 hover:bg-stone-700 text-base" onclick="selectQuizOpt(this, '${opt}', '${q.a}')">${opt}</button>
+                        `).join('')}
+                    </div>
+                    <p class="quiz-feedback mt-2 font-bold min-h-[1.5rem]"></p>
+                `;
+                container.appendChild(div);
+            });
+
+            document.getElementById('submit-quiz').onclick = () => {
+                let score = 0;
+                document.querySelectorAll('.quiz-opt.selected').forEach(btn => {
+                    if(btn.dataset.isCorrect === "true") score++;
+                });
+                
+                const scoreDisplay = document.getElementById('final-score');
+                scoreDisplay.innerText = `${score} / ${QUIZ_QUESTIONS.length}`;
+                
+                const msg = document.getElementById('quiz-message');
+                if(score === 15) {
+                    msg.innerText = "¡Memoria Histórica Perfecta!";
+                    msg.className = "text-2xl text-green-400 font-bold";
+                    showConfetti(scoreDisplay);
+                } else if (score > 10) {
+                    msg.innerText = "Gran conocimiento del legado familiar.";
+                    msg.className = "text-2xl text-amber-400 font-bold";
+                } else {
+                    msg.innerText = "Repasa las crónicas e inténtalo de nuevo.";
+                    msg.className = "text-2xl text-stone-400";
+                }
+
+                document.getElementById('quiz-results').classList.remove('hidden');
+                document.getElementById('submit-quiz').classList.add('hidden');
+                document.getElementById('reset-quiz').classList.remove('hidden');
+                
+                // Show answers
+                document.querySelectorAll('.quiz-opt').forEach(btn => {
+                    btn.disabled = true;
+                    if(btn.dataset.val === btn.dataset.correctAnswer) btn.classList.add('bg-green-900', 'border-green-600');
+                    else if(btn.classList.contains('selected')) btn.classList.add('bg-red-900', 'border-red-600');
+                });
+            };
+
+            document.getElementById('reset-quiz').onclick = () => {
+                location.reload(); // Simple reset
+            };
+        }
+
+        window.selectQuizOpt = function(btn, val, correct) {
+            // Deselect siblings
+            const parent = btn.parentElement;
+            parent.querySelectorAll('button').forEach(b => {
+                b.classList.remove('selected', 'bg-amber-700', 'border-amber-500');
+                b.classList.add('bg-stone-800', 'border-stone-700');
+            });
+            // Select this
+            btn.classList.remove('bg-stone-800', 'border-stone-700');
+            btn.classList.add('selected', 'bg-amber-700', 'border-amber-500');
+            
+            // Store data for validation
+            btn.dataset.val = val;
+            btn.dataset.correctAnswer = correct;
+            btn.dataset.isCorrect = (val === correct);
+        };
+
+        // --- CHAT ---
+        function initChat() {
+            const toggle = document.getElementById('chat-toggle');
+            const win = document.getElementById('chat-window');
+            const chatContent = document.getElementById('chat-content');
+
+            toggle.onclick = () => win.classList.toggle('hidden');
+            
+            document.querySelectorAll('.chat-option').forEach(btn => {
+                btn.onclick = function() {
+                    const topic = this.getAttribute('data-topic');
+                    
+                    if (topic === 'Analogia') {
+                        chatContent.innerHTML = `<p class="font-bold text-amber-400">${this.textContent.replace('(Local)', '')}</p><p class="mt-2 text-stone-300">${CHAT_CONTENT_LOCAL[topic] || 'No se encontró información para este tema localmente.'}</p>`;
+                    } else {
+                        chatContent.innerHTML = `<p class="font-bold text-amber-400">${this.textContent.replace('✨', '')}</p><p class="mt-2 text-stone-300">${CHAT_CONTENT_LOCAL[topic] || 'No se encontró información para este tema localmente.'}</p>`;
+                    }
+                }
+            });
+        }
+        
+        // --- UTILS ---
+
+        window.scrollToSection = (id) => document.querySelector(id).scrollIntoView({behavior:'smooth'});
+        
+        // Confetti function remains the same
+        function showConfetti(el) {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const particles = [];
+            for(let i=0; i<60; i++) {
+                particles.push({
+                    x: el.getBoundingClientRect().left + el.offsetWidth/2,
+                    y: el.getBoundingClientRect().top,
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: (Math.random() - 1) * 10,
+                    c: ['#fcd34d', '#b45309', '#ffffff'][Math.floor(Math.random()*3)]
+                });
+            }
+
+            function loop() {
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                let active = false;
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.5;
+                    if(p.y < canvas.height) active = true;
+                    ctx.fillStyle = p.c;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, 3, 0, Math.PI*2);
+                    ctx.fill();
+                });
+                if(active) requestAnimationFrame(loop);
+            }
+            loop();
         }
     </script>
 </body>
