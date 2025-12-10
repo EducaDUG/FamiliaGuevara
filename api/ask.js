@@ -1,19 +1,19 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-module.exports.config = {
+export const config = {
   maxDuration: 60,
 };
 
-module.exports.default = async function handler(req, res) {
-  // Configuración CORS
-  const allowedOrigins = [
-    "http://localhost:5500",
-    "http://127.0.0.1:5500",
-    "https://educadug.github.io",
-    "https://familia-guevara-git-main-diego-s-projects-f00e31fc.vercel.app",
-    "https://familia-guevara.vercel.app"
-  ];
+const allowedOrigins = [
+  "http://localhost:5500",
+  "http://127.0.0.1:5500",
+  "https://educadug.github.io",
+  "https://familia-guevara-git-main-diego-s-projects-f00e31fc.vercel.app",
+  "https://familia-guevara.vercel.app"
+];
 
+export default async function handler(req, res) {
+  // CORS
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin) || !origin) {
     res.setHeader("Access-Control-Allow-Origin", origin || "*");
@@ -32,6 +32,7 @@ module.exports.default = async function handler(req, res) {
   try {
     const { prompt, context } = req.body;
 
+    // Gemini
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
@@ -52,6 +53,9 @@ module.exports.default = async function handler(req, res) {
     return res.status(200).json({ answer: text });
   } catch (error) {
     console.error("Error API:", error);
-    return res.status(500).json({ error: "Error interno", details: error.message });
+    return res.status(500).json({
+      error: "Error interno",
+      details: error.message
+    });
   }
-};
+}
