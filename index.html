@@ -50,17 +50,17 @@
             font-family: 'Cormorant Garamond', serif;
         }
 
-        /* SCROLL SNAP */
-        .snap-container {
+        /* FIX: ELIMINACIÓN DE SCROLL SNAP para evitar bloqueos */
+        /* .snap-container {
             height: 100vh;
             overflow-y: scroll;
             scroll-snap-type: y mandatory;
             scroll-behavior: smooth;
-        }
+        } */
         .section {
             min-height: 100vh; 
             width: 100%;
-            scroll-snap-align: start; 
+            /* Eliminado scroll-snap-align: start; */
             position: relative;
             display: flex;
             align-items: center;
@@ -86,7 +86,8 @@
             background-image: none;
         }
         
-        .section:last-of-type, .section:nth-last-of-type(2) {
+        /* FIX DE SCROLL: Innecesario si eliminamos snap-container, pero se deja por si acaso */
+        .section:nth-last-of-type(-n+3) { 
              scroll-snap-align: none;
         }
 
@@ -250,7 +251,8 @@
         <div class="mt-8 w-64 h-3 bg-gold rounded-full"></div>
     </div>
 
-    <div class="snap-container">
+    <!-- ELIMINADO EL SCROLL SNAP DEL CONTENEDOR PRINCIPAL -->
+    <div class="h-screen overflow-y-scroll" id="main-content-scroll"> 
 
         <!-- 1. PORTADA -->
         <div class="section">
@@ -510,9 +512,9 @@
                     <p class="text-2xl mb-8">Haz clic en los eventos en orden cronológico (1º, 2º, 3º)</p>
                     
                     <div class="flex flex-col gap-4 max-w-2xl mx-auto">
-                        <button class="btn-action w-full bg-white text-ink border-2 border-gray-300 hover:bg-forest hover:text-white text-left" onclick="checkOrder(2, this)">1. Gripe Española (1918)</button>
-                        <button class="btn-action w-full bg-white text-ink border-2 border-gray-300 hover:bg-forest hover:text-white text-left" onclick="checkOrder(1, this)">2. Boda en Lezo (1916)</button>
-                        <button class="btn-action w-full bg-white text-ink border-2 border-gray-300 hover:bg-forest hover:text-white text-left" onclick="checkOrder(3, this)">3. Casa Ilárraza (1924)</button>
+                        <button class="btn-action w-full bg-white text-ink border-2 border-gray-300 hover:bg-forest hover:text-white text-left" onclick="checkOrder(2, this)">1. Gripe Española</button>
+                        <button class="btn-action w-full bg-white text-ink border-2 border-gray-300 hover:bg-forest hover:text-white text-left" onclick="checkOrder(1, this)">2. Boda en Lezo</button>
+                        <button class="btn-action w-full bg-white text-ink border-2 border-gray-300 hover:bg-forest hover:text-white text-left" onclick="checkOrder(3, this)">3. Casa Ilárraza</button>
                     </div>
                     <div id="fb-order" class="feedback-msg"></div>
                 </div>
@@ -720,12 +722,13 @@
                 btn.disabled = true;
 
                 if (orderStep === 3) {
-                    showFeedback('fb-order', true, '¡Orden Perfecto! Boda (1916) -> Gripe (1918) -> Casa (1924).');
+                    showFeedback('fb-order', true, '¡Orden Perfecto! Boda en Lezo (1º) -> Gripe Española (2º) -> Casa Ilárraza (3º).');
                     orderStep = 0;
                 }
             } else {
-                showFeedback('fb-order', false, 'Orden incorrecto. La historia comienza con la Boda (1916). Reinicia la página para probar otra vez.');
+                showFeedback('fb-order', false, 'Orden incorrecto. La historia comienza con la Boda en Lezo (1º). Reinicia la página para probar otra vez.');
                 orderStep = 0;
+                // Deshabilitar botones solo si hay un error
                 document.querySelectorAll('.section:nth-of-type(11) .game-card button').forEach(b => {
                     b.disabled = true;
                     b.style.background = "#631818";
